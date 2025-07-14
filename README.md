@@ -124,7 +124,7 @@ import './assets/main.css'
 
 ### **Prerequisites:**
 - Node.js (v16 or higher)
-- npm or yarn
+- npm
 - Docker (for containerized deployment)
 
 ### **Installation:**
@@ -166,7 +166,7 @@ npm run preview
 ### **Development Scripts:**
 - `npm run start` - Start both backend and frontend development servers in parallel
 - `npm run frontend` - Start only the frontend development server (Vite)
-- `npm run backend` - Start only the backend server (Express)
+- `npm run backend` - Start only the backend server (Express, from the `/backend` folder)
 - `npm run fresh` - Clean all node_modules and lock files, reinstall dependencies, then start both servers
 - `npm run health` - Run health checks on both servers
 - `npm run check` - Run lint, format, and unit tests in sequence
