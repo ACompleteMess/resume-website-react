@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend/Dockerfile
+    ports:
+      - "9000:80"
+    depends_on:
+      - backend
+    environment:
+      - NODE_ENV=development
+    networks:
+      - resume-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    ports:
+      - "9001:9001"
+    environment:
+      - NODE_ENV=development
+      - PORT=9001
+      - HOST=0.0.0.0
+    env_file:
+      - backend/.env
+    networks:
+      - resume-network
+
+networks:
+  resume-network:
+    driver: bridge 
