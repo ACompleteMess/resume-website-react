@@ -1,8 +1,13 @@
 # Node
 node_modules/
+frontend/node_modules/
+backend/node_modules/
 
 # Build output
 dist/
+frontend/dist/
+backend/dist/
+backend/build/
 
 # Logs
 npm-debug.log*
@@ -15,6 +20,8 @@ Thumbs.db
 
 # Env files
 .env*
+frontend/.env*
+backend/.env*
 
 # IDEs
 .vscode/
@@ -22,3 +29,19 @@ Thumbs.db
 
 # Misc
 *.local 
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+frontend/package-lock.json
+backend/package-lock.json
+
+# Docker
+**/docker-compose.override.yml
+**/docker-compose.*.yml
+.docker/
+
+# Kubernetes
+*.kube/
+*.k8s/ 

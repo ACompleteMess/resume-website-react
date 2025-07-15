@@ -14,9 +14,9 @@ A modern, containerized web application for showcasing your resume, built with V
 
 ---
 
-## Quick Start
+## Getting Started
 
-### 1. Install dependencies (from project root):
+### 1. Install dependencies (from project root, uses npm workspaces):
 ```sh
 npm install
 ```
@@ -42,14 +42,16 @@ npm run check
 
 ## Scripts (from project root)
 
-- `npm run start:dev` — Start both servers in dev mode
+- `npm run start:dev` — Start both servers in dev mode (uses correct .env files)
 - `npm run start:staging` — Start both servers in staging mode
 - `npm run start:prod` — Start both servers in production mode
-- `npm run build` — Build the frontend for production
+- `npm run build` — Build both frontend and backend for production
 - `npm run check` — Lint, format, type-check, and test both frontend and backend
 - `npm run clean` — Remove build artifacts
 - `npm run clean:all` — Remove build artifacts, node_modules, and lock files
 - `node scripts/health-check.js [env]` — Health check for any environment (default: development)
+
+> All scripts are orchestrated from the root using npm workspaces. You can also run scripts in each workspace using `npm run <script> --workspace <workspace>`.
 
 ---
 
@@ -74,13 +76,19 @@ HOST=0.0.0.0
 NODE_ENV=development
 ```
 
+> Ports: 9000/9001 for dev, 9002/9003 for staging, 9004/9005 for prod. If not set, defaults to 5173 (frontend) and 3000 (backend).
+
 ---
 
 ## Testing & Quality
 
 - **Frontend unit tests:**
   ```sh
-  npm run test
+  npm run test --workspace frontend
+  ```
+- **Backend unit tests:**
+  ```sh
+  npm run test --workspace backend
   ```
 - **Full code quality check:**
   ```sh
@@ -103,6 +111,13 @@ NODE_ENV=development
 - **Kubernetes:**
   - Manifests in `k8s/` for dev, staging, prod
   - Use Helm for templated deployments
+
+---
+
+## TypeScript Backend
+
+- The backend is fully migrated to TypeScript. Use `ts-node` for development and `tsc` for builds.
+- All backend source files are in `backend/src/` (if not, update accordingly).
 
 ---
 
