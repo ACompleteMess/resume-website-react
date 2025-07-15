@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: docker/frontend/Dockerfile
     ports:
-      - "9000:80"
+      - "${FRONTEND_PORT}:80"
     depends_on:
       - backend
     environment:
@@ -19,10 +19,10 @@ services:
       context: .
       dockerfile: docker/backend/Dockerfile
     ports:
-      - "9001:9001"
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
     environment:
       - NODE_ENV=development
-      - PORT=9001
+      - PORT=${BACKEND_PORT}
       - HOST=0.0.0.0
     env_file:
       - backend/.env

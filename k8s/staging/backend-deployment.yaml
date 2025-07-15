@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resume-backend
+  namespace: staging
+  labels:
+    app: resume-backend
+    environment: staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resume-backend
+  template:
+    metadata:
+      labels:
+        app: resume-backend
+        environment: staging
+    spec:
+      containers:
+      - name: backend
+        image: resume-backend:latest
+        ports:
+        - containerPort: 9003
+        env:
+        - name: NODE_ENV
+          value: "staging"
+        - name: PORT
+          value: "9003"
+        - name: HOST
+          value: "0.0.0.0"
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /api/hello
+            port: 9003
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/hello
+            port: 9003
+          initialDelaySeconds: 5
+          periodSeconds: 5 

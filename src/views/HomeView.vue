@@ -47,7 +47,9 @@ const { personalInfo } = useResumeStore();
 const backendMessage = ref("");
 onMounted(async () => {
   try {
-    const res = await fetch("http://localhost:9001/api/hello");
+    const backendPort =
+      import.meta.env.VITE_BACKEND_PORT || import.meta.env.VITE_PORT;
+    const res = await fetch(`http://localhost:${backendPort}/api/hello`);
     const data = await res.json();
     backendMessage.value = data.message;
   } catch (e) {

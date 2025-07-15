@@ -12,10 +12,10 @@ app.use(express.static(path.join(__dirname, "../dist")));
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {
-  res.json({ 
-    status: "healthy", 
+  res.json({
+    status: "healthy",
     timestamp: new Date().toISOString(),
-    service: "resume-backend"
+    service: "resume-backend",
   });
 });
 
@@ -29,8 +29,14 @@ app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(__dirname, "../dist/index.html"));
 });
 
-const PORT = process.env.PORT || 9001;
-const HOST = process.env.HOST || "0.0.0.0";
+const PORT = process.env.PORT;
+if (!PORT) {
+  throw new Error("PORT environment variable must be set");
+}
+const HOST = process.env.HOST;
+if (!HOST) {
+  throw new Error("HOST environment variable must be set");
+}
 app.listen(PORT, HOST, () => {
   console.log(`Backend server running on http://${HOST}:${PORT}`);
 });
