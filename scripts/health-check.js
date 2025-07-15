@@ -1,4 +1,18 @@
 import http from "http";
+import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// Determine __dirname in ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Get environment from argument or NODE_ENV, default to development
+const env = process.argv[2] || process.env.NODE_ENV || "development";
+
+// Load frontend and backend .env files for the selected environment
+dotenv.config({ path: path.join(__dirname, `../frontend/.env.${env}`) });
+dotenv.config({ path: path.join(__dirname, `../backend/.env.${env}`) });
 
 // Get ports from environment variables with standard defaults
 const BACKEND_PORT = process.env.VITE_BACKEND_PORT || process.env.PORT;
@@ -51,7 +65,7 @@ function checkServer(url, name) {
 }
 
 async function runHealthCheck() {
-  console.log("🏥 Running health checks...\n");
+  console.log(`🏥 Running health checks for environment: ${env}\n`);
 
   try {
     await Promise.all([

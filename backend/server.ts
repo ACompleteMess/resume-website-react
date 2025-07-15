@@ -1,34 +1,33 @@
-"use strict";
-var __importDefault =
-  (this && this.__importDefault) ||
-  function (mod) {
-    return mod && mod.__esModule ? mod : { default: mod };
-  };
-Object.defineProperty(exports, "__esModule", { value: true });
-const fs_1 = __importDefault(require("fs"));
-const path_1 = __importDefault(require("path"));
-const dotenv_1 = __importDefault(require("dotenv"));
-const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
+import fs from "fs";
+import path from "path";
+import dotenv from "dotenv";
+import express from "express";
+import cors from "cors";
+
 const NODE_ENV = process.env.NODE_ENV || "development";
 const envFile = `.env.${NODE_ENV}`;
-const envPath = path_1.default.join(__dirname, envFile);
-const defaultEnvPath = path_1.default.join(__dirname, ".env");
-if (fs_1.default.existsSync(envPath)) {
-  dotenv_1.default.config({ path: envPath });
+const envPath = path.join(__dirname, envFile);
+const defaultEnvPath = path.join(__dirname, ".env");
+
+if (fs.existsSync(envPath)) {
+  dotenv.config({ path: envPath });
   console.log(`Loaded environment variables from ${envFile}`);
-} else if (fs_1.default.existsSync(defaultEnvPath)) {
-  dotenv_1.default.config({ path: defaultEnvPath });
+} else if (fs.existsSync(defaultEnvPath)) {
+  dotenv.config({ path: defaultEnvPath });
   console.log("Loaded environment variables from .env");
 } else {
-  dotenv_1.default.config();
+  dotenv.config();
   console.warn("No .env file found. Environment variables may be missing.");
 }
-const app = (0, express_1.default)();
-app.use((0, cors_1.default)());
-app.use(express_1.default.json());
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
 // Serve static files from the frontend dist directory
-app.use(express_1.default.static(path_1.default.join(__dirname, "../dist")));
+app.use(express.static(path.join(__dirname, "../dist")));
+
 // Health check endpoint
 app.get("/api/health", (req, res) => {
   res.json({
@@ -37,14 +36,17 @@ app.get("/api/health", (req, res) => {
     service: "resume-backend",
   });
 });
+
 // API route example
 app.get("/api/hello", (req, res) => {
   res.json({ message: "Hello from the backend!" });
 });
+
 // Fallback: serve index.html for any non-API route
 app.get(/^\/(?!api).*/, (req, res) => {
-  res.sendFile(path_1.default.join(__dirname, "../dist/index.html"));
+  res.sendFile(path.join(__dirname, "../dist/index.html"));
 });
+
 const PORT = process.env.PORT;
 if (!PORT) {
   throw new Error("PORT environment variable must be set");
