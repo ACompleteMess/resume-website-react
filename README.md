@@ -4,6 +4,44 @@ A modern, containerized web application for showcasing your resume, built with V
 
 ---
 
+## Dependencies & Tooling
+
+**Frontend:**
+- Vue 3
+- Vite
+- TypeScript
+- Pinia (state management)
+- Vue Router
+- Bootstrap
+- Font Awesome
+
+**Backend:**
+- Node.js
+- Express (v5)
+- TypeScript
+- CORS
+- dotenv
+
+**Dev/Build Tools:**
+- Vitest (frontend unit testing)
+- @vue/test-utils
+- ESLint (with Vue, TypeScript, Prettier configs)
+- Prettier
+- vue-tsc (TypeScript type checking for Vue)
+- ts-node (backend dev)
+- tsc (TypeScript compiler)
+- rimraf (clean scripts)
+- concurrently (run multiple scripts)
+- cross-env (set env vars in scripts)
+
+**DevOps / Infrastructure:**
+- Docker & Docker Compose
+- Kubernetes (manifests in k8s/)
+- Helm (for templated K8s deployments)
+- Nginx (frontend static serving in Docker)
+
+---
+
 ## Monorepo Structure
 
 - `frontend/` — Vue 3 + Vite + TypeScript app
