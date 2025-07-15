@@ -22,7 +22,7 @@ RUN chown -R nodejs:nodejs /app
 USER nodejs
 
 # Expose port
-EXPOSE ${PORT:-3000}
+EXPOSE $PORT
 
 # Start the server
 CMD ["node", "server.js"] 

@@ -1,9 +1,9 @@
 import http from "http";
 
 // Get ports from environment variables with standard defaults
-const BACKEND_PORT = process.env.BACKEND_PORT || process.env.PORT;
-const FRONTEND_PORT = process.env.FRONTEND_PORT || process.env.VITE_PORT;
-const HOST = process.env.HOST;
+const BACKEND_PORT = process.env.VITE_BACKEND_PORT || process.env.PORT;
+const FRONTEND_PORT = process.env.VITE_PORT;
+const HOST = process.env.VITE_HOST || "localhost";
 if (!HOST) {
   throw new Error("HOST environment variable must be set");
 }

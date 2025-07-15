@@ -1,0 +1,5 @@
+apiVersion: v2
+name: resume-frontend
+version: 0.1.0
+description: Helm chart for the Resume Website frontend (Vue.js)
+type: application 

@@ -1,0 +1,37 @@
+# Default values for resume-backend Helm chart
+# These can be overridden per environment using separate values files
+
+replicaCount: 1
+
+image:
+  repository: your-dockerhub-username/resume-backend
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 9001
+  nodePort: 30081  # dev default, override in staging/prod
+
+env:
+  NODE_ENV: development
+  # Add other environment variables as needed
+
+# ---
+# Example overrides for different environments:
+#
+# dev:
+#   service:
+#     nodePort: 30081
+#   env:
+#     NODE_ENV: development
+# staging:
+#   service:
+#     nodePort: 30083
+#   env:
+#     NODE_ENV: staging
+# prod:
+#   service:
+#     nodePort: 30085
+#   env:
+#     NODE_ENV: production 

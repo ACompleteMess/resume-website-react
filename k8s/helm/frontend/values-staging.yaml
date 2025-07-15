@@ -1,0 +1,11 @@
+replicaCount: 1
+image:
+  repository: resume-frontend
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  type: NodePort
+  port: 80
+  nodePort: 30082
+env:
+  NODE_ENV: staging 

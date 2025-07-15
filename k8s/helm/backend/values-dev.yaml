@@ -1,0 +1,11 @@
+replicaCount: 1
+image:
+  repository: resume-backend
+  tag: latest
+  pullPolicy: Never
+service:
+  type: NodePort
+  port: 9001
+  nodePort: 30081
+env:
+  NODE_ENV: development 

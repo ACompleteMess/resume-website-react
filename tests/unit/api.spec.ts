@@ -1,8 +1,9 @@
 import { describe, it, expect } from "vitest";
 
 describe("API Endpoints", () => {
-  const backendPort = process.env.BACKEND_PORT || process.env.PORT;
-  const baseUrl = `http://localhost:${backendPort}`;
+  const backendPort = process.env.PORT;
+  const backendHost = process.env.HOST || "localhost";
+  const baseUrl = `http://${backendHost}:${backendPort}`;
 
   it("/api/health returns healthy status", async () => {
     try {

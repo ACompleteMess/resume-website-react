@@ -1,7 +1,26 @@
-require("dotenv").config();
+// Load environment variables based on NODE_ENV
+const fs = require("fs");
+const path = require("path");
+const dotenv = require("dotenv");
+
+const NODE_ENV = process.env.NODE_ENV || "development";
+const envFile = `.env.${NODE_ENV}`;
+const envPath = path.join(__dirname, envFile);
+const defaultEnvPath = path.join(__dirname, ".env");
+
+if (fs.existsSync(envPath)) {
+  dotenv.config({ path: envPath });
+  console.log(`Loaded environment variables from ${envFile}`);
+} else if (fs.existsSync(defaultEnvPath)) {
+  dotenv.config({ path: defaultEnvPath });
+  console.log("Loaded environment variables from .env");
+} else {
+  dotenv.config();
+  console.warn("No .env file found. Environment variables may be missing.");
+}
+
 const express = require("express");
 const cors = require("cors");
-const path = require("path");
 const app = express();
 
 app.use(cors());

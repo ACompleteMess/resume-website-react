@@ -1,0 +1,11 @@
+replicaCount: 1
+image:
+  repository: resume-backend
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  type: NodePort
+  port: 9005
+  nodePort: 30085
+env:
+  NODE_ENV: production 
