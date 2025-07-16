@@ -80,7 +80,7 @@ npm run check
 
 ## Scripts (from project root)
 
-- `npm run start:dev` — Start both servers in dev mode (uses correct .env files)
+- `npm run start:dev` — Start both servers in dev mode (uses environment variables or defaults)
 - `npm run start:staging` — Start both servers in staging mode
 - `npm run start:prod` — Start both servers in production mode
 - `npm run build` — Build both frontend and backend for production
@@ -88,33 +88,20 @@ npm run check
 - `npm run clean` — Remove build artifacts
 - `npm run clean:all` — Remove build artifacts, node_modules, and lock files
 - `node scripts/health-check.js [env]` — Health check for any environment (default: development)
+- `npm run docker:logs` — View logs from Docker Compose services
 
 > All scripts are orchestrated from the root using npm workspaces. You can also run scripts in each workspace using `npm run <script> --workspace <workspace>`.
 
 ---
 
-## Environment Variables
+## Environment Variables & Port Strategy
 
-- **Frontend:** `frontend/.env.development`, `.env.staging`, `.env.production`
-- **Backend:** `backend/.env.development`, `.env.staging`, `.env.production`
-- **Docker Compose:** `.env.development`, `.env.staging`, `.env.production` (root, for Compose only)
-
-**Example `frontend/.env.development`:**
-```
-VITE_PORT=9000
-VITE_HOST=0.0.0.0
-VITE_BACKEND_HOST=localhost
-VITE_BACKEND_PORT=9001
-```
-
-**Example `backend/.env.development`:**
-```
-PORT=9001
-HOST=0.0.0.0
-NODE_ENV=development
-```
-
-> Ports: 9000/9001 for dev, 9002/9003 for staging, 9004/9005 for prod. If not set, defaults to 5173 (frontend) and 3000 (backend).
+- **Environment variables** are now managed by Docker Compose and Kubernetes manifests. No `.env.*` files are required in the repo.
+- **Ports:**
+  - **Development:** 9000 (frontend), 9001 (backend)
+  - **Staging:** 9002 (frontend), 9003 (backend)
+  - **Production:** 9004 (frontend), 9005 (backend)
+  - If environment variables are not set, defaults to 5173 (frontend) and 3000 (backend).
 
 ---
 
@@ -124,10 +111,7 @@ NODE_ENV=development
   ```sh
   npm run test --workspace frontend
   ```
-- **Backend unit tests:**
-  ```sh
-  npm run test --workspace backend
-  ```
+- **Backend:** No backend unit tests (API is simple and covered by health checks).
 - **Full code quality check:**
   ```sh
   npm run check
@@ -142,27 +126,31 @@ NODE_ENV=development
 ## Docker & Kubernetes
 
 ### Docker Compose
-```sh
-npm run docker:up:dev
-npm run docker:up:staging  
-npm run docker:up:prod
-```
-
-### Port Strategy
-- **npm (Local Development)**: 9000-9005
-- **Docker Compose**: 9000-9005  
-- **Kubernetes**: Container ports (80, 9001)
+- Healthchecks are configured for both frontend (`/`) and backend (`/api/health`) services.
+- Uses environment-specific `.env` files at the root for Compose only (not checked into repo).
+- Example usage:
+  ```sh
+  npm run docker:up:dev
+  npm run docker:up:staging  
+  npm run docker:up:prod
+  ```
 
 ### Kubernetes
-- Manifests in `k8s/` for dev, staging, prod
-- Use Helm for templated deployments
+- Manifests in `k8s/` for dev, staging, prod.
+- Liveness and readiness probes are set for both frontend and backend.
+- **Image pull policy:**
+  - `Never` for dev (uses local images)
+  - `IfNotPresent` for staging
+  - `Always` for prod
+- Use Helm for templated deployments.
+- For local dev, ensure images are built locally and use `imagePullPolicy: Never`.
 
 ---
 
 ## TypeScript Backend
 
 - The backend is fully migrated to TypeScript. Use `ts-node` for development and `tsc` for builds.
-- All backend source files are in `backend/src/` (if not, update accordingly).
+- All backend source files are in `backend/`.
 
 ---
 
