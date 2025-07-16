@@ -141,14 +141,21 @@ NODE_ENV=development
 
 ## Docker & Kubernetes
 
-- **Docker Compose:**
-  ```sh
-  npm run docker:up
-  npm run docker:down
-  ```
-- **Kubernetes:**
-  - Manifests in `k8s/` for dev, staging, prod
-  - Use Helm for templated deployments
+### Docker Compose
+```sh
+npm run docker:up:dev
+npm run docker:up:staging  
+npm run docker:up:prod
+```
+
+### Port Strategy
+- **npm (Local Development)**: 9000-9005
+- **Docker Compose**: 9000-9005  
+- **Kubernetes**: Container ports (80, 9001)
+
+### Kubernetes
+- Manifests in `k8s/` for dev, staging, prod
+- Use Helm for templated deployments
 
 ---
 
