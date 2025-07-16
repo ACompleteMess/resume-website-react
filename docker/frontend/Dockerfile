@@ -1,29 +1,34 @@
 # Frontend Dockerfile for Vue.js app
 FROM node:18-alpine as build
 
+# Build arg for Vite mode (development, staging, production)
+ARG VITE_MODE
+ENV VITE_MODE=$VITE_MODE
+
 # Set working directory
 WORKDIR /app
 
-# Copy package files
+# Copy root package files (for workspaces)
 COPY package*.json ./
+COPY frontend/package.json ./frontend/
 
-# Install dependencies
-RUN npm ci
+# Install dependencies using workspace
+RUN npm ci --workspace=frontend
 
-# Copy source code
-COPY . .
+# Copy frontend source code
+COPY frontend/ ./frontend/
 
-# Build the app
-RUN npm run build
+# Build the app with the correct mode (loads .env.{mode})
+RUN npm run build --workspace=frontend -- --mode $VITE_MODE
 
 # Production stage
 FROM nginx:alpine
 
 # Copy built app from build stage
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/frontend/dist /usr/share/nginx/html
 
 # Copy nginx configuration
-COPY ../docker/frontend/nginx.conf /etc/nginx/conf.d/default.conf
+COPY frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port
 EXPOSE 80

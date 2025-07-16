@@ -4,20 +4,19 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 
-const NODE_ENV = process.env.NODE_ENV || "development";
-const envFile = `.env.${NODE_ENV}`;
-const envPath = path.join(__dirname, envFile);
-const defaultEnvPath = path.join(__dirname, ".env");
+if (!process.env.NODE_ENV) {
+  console.error('NODE_ENV must be set (e.g., development, staging, production)');
+  process.exit(1);
+}
+
+const envFile = `.env.${process.env.NODE_ENV}`;
+const envPath = path.join(process.cwd(), envFile);
 
 if (fs.existsSync(envPath)) {
   dotenv.config({ path: envPath });
   console.log(`Loaded environment variables from ${envFile}`);
-} else if (fs.existsSync(defaultEnvPath)) {
-  dotenv.config({ path: defaultEnvPath });
-  console.log("Loaded environment variables from .env");
 } else {
-  dotenv.config();
-  console.warn("No .env file found. Environment variables may be missing.");
+  console.log(`Environment file ${envFile} not found. Using environment variables from process environment.`);
 }
 
 const app = express();

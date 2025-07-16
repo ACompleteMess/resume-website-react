@@ -1,6 +1,7 @@
 {
   "name": "resume-website",
   "private": true,
+  "type": "module",
   "workspaces": [
     "frontend",
     "backend"
@@ -21,7 +22,14 @@
     "clean:all": "rimraf frontend/dist backend/dist frontend/node_modules backend/node_modules node_modules frontend/package-lock.json backend/package-lock.json package-lock.json",
     "start:dev": "concurrently \"npm run backend\" \"npm run dev\"",
     "start:staging": "concurrently \"npm run backend:staging\" \"npm --workspace frontend run dev -- --mode staging\"",
-    "start:prod": "concurrently \"npm run backend:prod\" \"npm --workspace frontend run dev -- --mode production\""
+    "start:prod": "concurrently \"npm run backend:prod\" \"npm --workspace frontend run dev -- --mode production\"",
+    "docker:build:frontend": "docker build -f docker/frontend/Dockerfile -t resume-frontend:latest --build-arg VITE_MODE=development .",
+    "docker:build:backend": "docker build -f docker/backend/Dockerfile -t resume-backend:latest --build-arg NODE_ENV=development .",
+    "docker:build:all": "npm run docker:build:frontend && npm run docker:build:backend",
+    "docker:up:dev": "docker-compose --env-file .env.development up --build",
+    "docker:up:staging": "docker-compose --env-file .env.staging up --build",
+    "docker:up:prod": "docker-compose --env-file .env.production up --build",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install && cd .."
   },
   "devDependencies": {
     "concurrently": "^9.2.0",
