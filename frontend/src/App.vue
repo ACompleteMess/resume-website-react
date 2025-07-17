@@ -103,7 +103,10 @@ function closeNavbar() {
   if (navbarCollapse && navbarCollapse.classList.contains("show")) {
     // Bootstrap 5 uses Collapse instance
     // @ts-ignore
-    const collapse = window.bootstrap && window.bootstrap.Collapse ? window.bootstrap.Collapse.getOrCreateInstance(navbarCollapse) : null;
+    const collapse =
+      window.bootstrap && window.bootstrap.Collapse
+        ? window.bootstrap.Collapse.getOrCreateInstance(navbarCollapse)
+        : null;
     if (collapse) {
       collapse.hide();
     } else {
@@ -121,10 +124,14 @@ onMounted(() => {
 const env = import.meta.env.MODE || import.meta.env.VITE_ENV || "development";
 const showEnvBanner = computed(() => env !== "production");
 const envLabel = computed(() =>
-  env === "staging" ? "Staging Environment" : env === "development" ? "Development Environment" : env
+  env === "staging"
+    ? "Staging Environment"
+    : env === "development"
+      ? "Development Environment"
+      : env,
 );
 const envClass = computed(() =>
-  env === "staging" ? "env-banner-staging" : "env-banner-dev"
+  env === "staging" ? "env-banner-staging" : "env-banner-dev",
 );
 </script>
 

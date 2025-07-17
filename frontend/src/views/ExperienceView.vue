@@ -25,7 +25,7 @@
                   <router-link
                     :to="getRoleDetailLink(role)"
                     class="card h-100 shadow-sm hover-card text-decoration-none"
-                    style="color: inherit;"
+                    style="color: inherit"
                   >
                     <div class="card-body">
                       <h6 class="card-subtitle mb-2 text-muted">
@@ -41,7 +41,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -57,12 +56,10 @@ const { groupedExperiences, experiences } = useResumeStore();
 function getRoleDetailLink(role: ExperienceRole) {
   // Find the original experience by matching position, duration, and company
   const exp = experiences.find(
-    e =>
-      e.position === role.position &&
-      e.duration === role.duration &&
-      e.company
+    (e) =>
+      e.position === role.position && e.duration === role.duration && e.company,
   );
-  return exp ? `/experience/${exp.slug}` : '#';
+  return exp ? `/experience/${exp.slug}` : "#";
 }
 </script>
 

@@ -47,14 +47,33 @@
               </div>
               <div class="mb-4">
                 <h6>Description:</h6>
-                <template v-if="descriptionWithoutOverview && descriptionWithoutOverview.includes('Old Version:') && descriptionWithoutOverview.includes('Enhanced Version:')">
+                <template
+                  v-if="
+                    descriptionWithoutOverview &&
+                    descriptionWithoutOverview.includes('Old Version:') &&
+                    descriptionWithoutOverview.includes('Enhanced Version:')
+                  "
+                >
                   <div class="mb-2 p-2 bg-light border rounded">
                     <strong>Old Version:</strong>
-                    <p>{{ descriptionWithoutOverview.split('Enhanced Version:')[0].replace('Old Version:', '').trim() }}</p>
+                    <p>
+                      {{
+                        descriptionWithoutOverview
+                          .split("Enhanced Version:")[0]
+                          .replace("Old Version:", "")
+                          .trim()
+                      }}
+                    </p>
                   </div>
                   <div class="mb-2 p-2 bg-light border rounded">
                     <strong>Enhanced Version:</strong>
-                    <p>{{ descriptionWithoutOverview.split('Enhanced Version:')[1].trim() }}</p>
+                    <p>
+                      {{
+                        descriptionWithoutOverview
+                          .split("Enhanced Version:")[1]
+                          .trim()
+                      }}
+                    </p>
                   </div>
                 </template>
                 <template v-else>
@@ -63,11 +82,19 @@
               </div>
               <div v-if="experience.achievements">
                 <h6>Key Achievements:</h6>
-                <template v-if="experience.achievements.includes('Old Version:') && experience.achievements.includes('Enhanced Version:')">
+                <template
+                  v-if="
+                    experience.achievements.includes('Old Version:') &&
+                    experience.achievements.includes('Enhanced Version:')
+                  "
+                >
                   <div class="mb-2">
                     <strong>Old Version:</strong>
                     <ul>
-                      <li v-for="achievement in oldAchievements" :key="'old-' + achievement">
+                      <li
+                        v-for="achievement in oldAchievements"
+                        :key="'old-' + achievement"
+                      >
                         {{ achievement }}
                       </li>
                     </ul>
@@ -75,7 +102,10 @@
                   <div class="mb-2">
                     <strong>Enhanced Version:</strong>
                     <ul>
-                      <li v-for="achievement in enhancedAchievements" :key="'enhanced-' + achievement">
+                      <li
+                        v-for="achievement in enhancedAchievements"
+                        :key="'enhanced-' + achievement"
+                      >
                         {{ achievement }}
                       </li>
                     </ul>
@@ -83,7 +113,10 @@
                 </template>
                 <template v-else>
                   <ul>
-                    <li v-for="achievement in experience.achievements" :key="achievement">
+                    <li
+                      v-for="achievement in experience.achievements"
+                      :key="achievement"
+                    >
                       {{ achievement }}
                     </li>
                   </ul>
@@ -125,9 +158,11 @@ const descriptionWithoutOverview = computed(() => {
 });
 
 const oldAchievements = computed(() => {
-  if (!experience.value || !Array.isArray(experience.value.achievements)) return [];
-  const oldIdx = experience.value.achievements.indexOf('Old Version:');
-  const enhancedIdx = experience.value.achievements.indexOf('Enhanced Version:');
+  if (!experience.value || !Array.isArray(experience.value.achievements))
+    return [];
+  const oldIdx = experience.value.achievements.indexOf("Old Version:");
+  const enhancedIdx =
+    experience.value.achievements.indexOf("Enhanced Version:");
   if (oldIdx !== -1 && enhancedIdx !== -1) {
     return experience.value.achievements.slice(oldIdx + 1, enhancedIdx);
   }
@@ -135,8 +170,10 @@ const oldAchievements = computed(() => {
 });
 
 const enhancedAchievements = computed(() => {
-  if (!experience.value || !Array.isArray(experience.value.achievements)) return [];
-  const enhancedIdx = experience.value.achievements.indexOf('Enhanced Version:');
+  if (!experience.value || !Array.isArray(experience.value.achievements))
+    return [];
+  const enhancedIdx =
+    experience.value.achievements.indexOf("Enhanced Version:");
   if (enhancedIdx !== -1) {
     return experience.value.achievements.slice(enhancedIdx + 1);
   }

@@ -81,7 +81,8 @@ export const useResumeStore = defineStore("resume", () => {
       id: 1,
       slug: "rockwell-automation-engineering-manager",
       company: "Rockwell Automation",
-      companyOverview: "Rockwell Automation is a global leader in industrial automation and digital transformation, providing integrated control and information solutions to help manufacturers optimize their operations. With over 28,000 employees worldwide, the company serves customers in more than 100 countries and is a Fortune 500 company.",
+      companyOverview:
+        "Rockwell Automation is a global leader in industrial automation and digital transformation, providing integrated control and information solutions to help manufacturers optimize their operations. With over 28,000 employees worldwide, the company serves customers in more than 100 countries and is a Fortune 500 company.",
       position:
         "Engineering Manager Application Security, Product Automation, FactoryTalk Design Studio",
       duration: "August 2022 - Present",
@@ -111,7 +112,7 @@ export const useResumeStore = defineStore("resume", () => {
         "Cybeats",
         "SBOM",
         "SOC2",
-        "ISO 27001"
+        "ISO 27001",
       ],
       achievements: [
         "Leading a global, hybrid/remote team of over 25 (including consultants), having grown the team from 6 to 12, across four strategic programs focused on cloud and hybrid infrastructure security and compliance.",
@@ -125,20 +126,20 @@ export const useResumeStore = defineStore("resume", () => {
         "Identified and closed compliance gaps by automating company-wide security processes, enabling a shift from annual to quarterly release cycles and significantly increasing organizational agility.",
         "Automated product security reviews by over 50 percent through a homegrown DfS (Design for Security) process, automating the filling out, submission, and review workflow with custom scripts.",
         "Partnered with Finance, Security and Product teams to align technical execution with cost-saving and governance KPIs, building pipelines, monitoring, and visual graphs to show real-time spending to consumers and leaders.",
-        "Managed communications, delivery, and deadlines for projects between the global Product Security Office and Office of Product Safety & Security with the Software Development teams."
+        "Managed communications, delivery, and deadlines for projects between the global Product Security Office and Office of Product Safety & Security with the Software Development teams.",
       ],
     },
     {
       id: 2,
       slug: "allianz-technology-se-engineering-manager",
       company: "Allianz Technology SE",
-      companyOverview: "Allianz Technology is the global IT service provider for Allianz Group, one of the world’s largest insurers and asset managers, with over €2 trillion in assets under management and operations in 70+ countries.",
+      companyOverview:
+        "Allianz Technology is the global IT service provider for Allianz Group, one of the world’s largest insurers and asset managers, with over €2 trillion in assets under management and operations in 70+ countries.",
       position:
         "Engineering Manager, Enterprise Architecture - Agile Delivery Platform (ADP)",
       duration: "August 2019 - August 2021",
       location: "Munich, Germany",
-      description:
-        `Directed engineering and delivery for Allianz Technology’s global Agile Delivery Platform (ADP), leading a cross-functional team to design, implement, and launch the company’s first managed Kubernetes PaaS solution. Oversaw technical execution, resource planning, and operational excellence, ensuring alignment with enterprise architecture and business objectives.`,
+      description: `Directed engineering and delivery for Allianz Technology’s global Agile Delivery Platform (ADP), leading a cross-functional team to design, implement, and launch the company’s first managed Kubernetes PaaS solution. Oversaw technical execution, resource planning, and operational excellence, ensuring alignment with enterprise architecture and business objectives.`,
       technologies: [
         "AWS",
         "Azure",
@@ -165,19 +166,19 @@ export const useResumeStore = defineStore("resume", () => {
         "Created and maintained technical documentation, runbooks, and operational procedures for platform maintenance and troubleshooting.",
         "Mentored and developed team members, fostering a culture of technical excellence and continuous learning across the organization.",
         "Collaborated with architecture teams to define and implement enterprise-wide cloud standards and best practices.",
-        "Managed platform capacity planning and resource allocation, ensuring optimal performance and cost efficiency across all regions."
+        "Managed platform capacity planning and resource allocation, ensuring optimal performance and cost efficiency across all regions.",
       ],
     },
     {
       id: 3,
       slug: "allianz-technology-se-product-manager",
       company: "Allianz Technology SE",
-      companyOverview: "Allianz Technology is the global IT service provider for Allianz Group, one of the world’s largest insurers and asset managers, with over €2 trillion in assets under management and operations in 70+ countries.",
+      companyOverview:
+        "Allianz Technology is the global IT service provider for Allianz Group, one of the world’s largest insurers and asset managers, with over €2 trillion in assets under management and operations in 70+ countries.",
       position: "Product Manager, Enterprise Architecture - Public Cloud Team",
       duration: "August 2018 - August 2019",
       location: "Munich, Germany",
-      description:
-        `Launched and scaled Allianz’s first global AWS & Azure cloud managed infrastructure service, transforming an internal start-up into a production platform spanning 14 regions and 300+ accounts. Defined the product vision and roadmap, led multi-vendor and cross-functional teams, and managed all aspects of cloud operations, service delivery, and client engagement. Introduced agile methodologies and practices, driving a culture of continuous improvement and delivery transformation. Drove technical and business alignment, enabling secure, scalable, and cost-effective cloud adoption across the Allianz group`,
+      description: `Launched and scaled Allianz’s first global AWS & Azure cloud managed infrastructure service, transforming an internal start-up into a production platform spanning 14 regions and 300+ accounts. Defined the product vision and roadmap, led multi-vendor and cross-functional teams, and managed all aspects of cloud operations, service delivery, and client engagement. Introduced agile methodologies and practices, driving a culture of continuous improvement and delivery transformation. Drove technical and business alignment, enabling secure, scalable, and cost-effective cloud adoption across the Allianz group`,
       technologies: [
         "AWS",
         "Azure",
@@ -193,7 +194,7 @@ export const useResumeStore = defineStore("resume", () => {
         "IAM",
         "Azure AD",
         "Python",
-        "Bash"
+        "Bash",
       ],
       achievements: [
         // Enhanced Version only
@@ -206,14 +207,15 @@ export const useResumeStore = defineStore("resume", () => {
         "Created RFPs, service agreements, and detailed technical requirements for new and existing projects.",
         "Designed and led the Operations Excellence team and incident management process, ensuring reliability and rapid response for global cloud services.",
         "Developed and maintained client relationships, gathering feedback and aligning services to business needs.",
-        "Managed technical application services including DNS (OpenDNS, Bind9), proxy (Tinyproxy, Squid), and user management (IAM, Azure AD, Active Directory), leveraging custom automation and integration scripts in Python and Bash."
+        "Managed technical application services including DNS (OpenDNS, Bind9), proxy (Tinyproxy, Squid), and user management (IAM, Azure AD, Active Directory), leveraging custom automation and integration scripts in Python and Bash.",
       ],
     },
     {
       id: 4,
       slug: "opinionlab-team-leader",
       company: "OpinionLab",
-      companyOverview: "OpinionLab was a leading customer feedback and voice-of-customer analytics platform, helping Fortune 500 companies collect, analyze, and act on customer insights to improve user experience and business outcomes.",
+      companyOverview:
+        "OpinionLab was a leading customer feedback and voice-of-customer analytics platform, helping Fortune 500 companies collect, analyze, and act on customer insights to improve user experience and business outcomes.",
       position: "Team Leader, Operations Team",
       duration: "October 2016 - August 2017",
       location: "Chicago, Illinois, US",
@@ -231,7 +233,7 @@ export const useResumeStore = defineStore("resume", () => {
         "API Gateway",
         "Cognito",
         "DynamoDB",
-        "Agile/Scrum"
+        "Agile/Scrum",
       ],
       achievements: [
         "Led and mentored a 10-member DevSecOps, operations, and IT team, maintaining over 90% retention during platform scale-out and modernization",
@@ -241,14 +243,15 @@ export const useResumeStore = defineStore("resume", () => {
         "Led planning sessions, retrospectives, and standups for operation teams and scrum-of-scrums, enabling continuous improvement",
         "Assisted the Operations Director with security risk escalations and client implementation reviews",
         "Managed overall infrastructure and pipeline architecture, ensuring reliability and scalability across all DevOps initiatives",
-        "Managed operational support, uptime, on-call SLAs, and rotation schedules for hybrid cloud and AWS infrastructure, ensuring platform resilience and developer velocity"
+        "Managed operational support, uptime, on-call SLAs, and rotation schedules for hybrid cloud and AWS infrastructure, ensuring platform resilience and developer velocity",
       ],
     },
     {
       id: 5,
       slug: "opinionlab-devops-engineer",
       company: "OpinionLab",
-      companyOverview: "OpinionLab was a leading customer feedback and voice-of-customer analytics platform, helping Fortune 500 companies collect, analyze, and act on customer insights to improve user experience and business outcomes.",
+      companyOverview:
+        "OpinionLab was a leading customer feedback and voice-of-customer analytics platform, helping Fortune 500 companies collect, analyze, and act on customer insights to improve user experience and business outcomes.",
       position: "DevOps Engineer, Operation Team",
       duration: "October 2015 - October 2016",
       location: "Chicago, Illinois, US",
@@ -272,7 +275,7 @@ export const useResumeStore = defineStore("resume", () => {
         "ElasticSearch",
         "RabbitMQ",
         "Python",
-        "Ruby"
+        "Ruby",
       ],
       achievements: [
         "Redesigned AWS infrastructure and applications using Terraform, Ansible, Packer, and Vault, implementing secure, scalable infrastructure patterns to support multi-environment delivery",
@@ -283,15 +286,17 @@ export const useResumeStore = defineStore("resume", () => {
         "Automated cloud deployments across 15+ production applications using Circle-CI, Chef, Ansible, and GitHub, increasing velocity by 600%",
         "Managed and created deployment pipeline for developer use in Jenkins and CircleCI, enabling repeatable, testable infrastructure rollouts",
         "Enhanced production stability by reengineering alerting across PagerDuty, New Relic, Zabbix, Prometheus, and Grafana, cutting false positives by 180%",
-        "Developed on-call automation and supported production applications, reducing manual intervention and improving reliability"
+        "Developed on-call automation and supported production applications, reducing manual intervention and improving reliability",
       ],
     },
     {
       id: 6,
       slug: "suncorp-group-lead-devops-engineer",
       company: "Suncorp Group",
-      companyOverview: "Suncorp Group is one of Australia's largest financial services organizations, providing insurance, banking, and wealth management products and services to millions of customers across Australia and New Zealand.",
-      position: "Lead DevOps Engineer / Iteration Manager, Suncorp Business Services - Digital Media, Platform Team",
+      companyOverview:
+        "Suncorp Group is one of Australia's largest financial services organizations, providing insurance, banking, and wealth management products and services to millions of customers across Australia and New Zealand.",
+      position:
+        "Lead DevOps Engineer / Iteration Manager, Suncorp Business Services - Digital Media, Platform Team",
       duration: "May 2013 - October 2015",
       location: "Sydney, Australia",
       description:
@@ -312,7 +317,7 @@ export const useResumeStore = defineStore("resume", () => {
         "Python",
         "Bash",
         "Jira",
-        "Confluence"
+        "Confluence",
       ],
       achievements: [
         "Led AWS cloud migration of 40+ high-traffic e-commerce Drupal sites from private cloud, enabling zero downtime deployments and infrastructure fault tolerance",
@@ -327,7 +332,7 @@ export const useResumeStore = defineStore("resume", () => {
         "Conducted audit reformations and outage/recovery planning",
         "Managed team iteration reports to ensure project deadlines and costs were met",
         "Facilitated cross-functional collaboration between development, operations, and business teams",
-        "Managed product and team reports in Confluence and Jira, ensuring transparency and alignment across all stakeholders"
+        "Managed product and team reports in Confluence and Jira, ensuring transparency and alignment across all stakeholders",
       ],
     },
   ]);
@@ -419,7 +424,7 @@ export const useResumeStore = defineStore("resume", () => {
   // Grouped experience data
   const groupedExperiences = computed<GroupedExperience[]>(() => {
     const grouped: Record<string, ExperienceRole[]> = {};
-    experiences.value.forEach(exp => {
+    experiences.value.forEach((exp) => {
       if (!grouped[exp.company]) grouped[exp.company] = [];
       grouped[exp.company].push({
         position: exp.position,
@@ -430,7 +435,10 @@ export const useResumeStore = defineStore("resume", () => {
         achievements: exp.achievements,
       });
     });
-    return Object.entries(grouped).map(([company, roles]) => ({ company, roles }));
+    return Object.entries(grouped).map(([company, roles]) => ({
+      company,
+      roles,
+    }));
   });
 
   // Actions - replacing your old methods
