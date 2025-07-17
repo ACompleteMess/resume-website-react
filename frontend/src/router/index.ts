@@ -20,7 +20,7 @@ const router = createRouter({
       component: () => import("../views/ExperienceView.vue"),
     },
     {
-      path: "/experience/:id",
+      path: "/experience/:slug",
       name: "experience-detail",
       component: () => import("../views/ExperienceDetailView.vue"),
     },

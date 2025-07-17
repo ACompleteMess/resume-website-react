@@ -15,6 +15,12 @@
               </div>
             </div>
             <div class="card-body p-4">
+              <template v-if="companyOverview">
+                <div class="mb-4 p-3 bg-light border rounded">
+                  <strong>Company Overview:</strong>
+                  <div class="fst-italic">{{ companyOverview }}</div>
+                </div>
+              </template>
               <div class="row mb-4">
                 <div class="col-md-6">
                   <h5 class="text-primary">{{ experience.position }}</h5>
@@ -41,18 +47,47 @@
               </div>
               <div class="mb-4">
                 <h6>Description:</h6>
-                <p>{{ experience.description }}</p>
+                <template v-if="descriptionWithoutOverview && descriptionWithoutOverview.includes('Old Version:') && descriptionWithoutOverview.includes('Enhanced Version:')">
+                  <div class="mb-2 p-2 bg-light border rounded">
+                    <strong>Old Version:</strong>
+                    <p>{{ descriptionWithoutOverview.split('Enhanced Version:')[0].replace('Old Version:', '').trim() }}</p>
+                  </div>
+                  <div class="mb-2 p-2 bg-light border rounded">
+                    <strong>Enhanced Version:</strong>
+                    <p>{{ descriptionWithoutOverview.split('Enhanced Version:')[1].trim() }}</p>
+                  </div>
+                </template>
+                <template v-else>
+                  <p>{{ descriptionWithoutOverview }}</p>
+                </template>
               </div>
               <div v-if="experience.achievements">
                 <h6>Key Achievements:</h6>
-                <ul>
-                  <li
-                    v-for="achievement in experience.achievements"
-                    :key="achievement"
-                  >
-                    {{ achievement }}
-                  </li>
-                </ul>
+                <template v-if="experience.achievements.includes('Old Version:') && experience.achievements.includes('Enhanced Version:')">
+                  <div class="mb-2">
+                    <strong>Old Version:</strong>
+                    <ul>
+                      <li v-for="achievement in oldAchievements" :key="'old-' + achievement">
+                        {{ achievement }}
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="mb-2">
+                    <strong>Enhanced Version:</strong>
+                    <ul>
+                      <li v-for="achievement in enhancedAchievements" :key="'enhanced-' + achievement">
+                        {{ achievement }}
+                      </li>
+                    </ul>
+                  </div>
+                </template>
+                <template v-else>
+                  <ul>
+                    <li v-for="achievement in experience.achievements" :key="achievement">
+                      {{ achievement }}
+                    </li>
+                  </ul>
+                </template>
               </div>
             </div>
           </div>
@@ -74,10 +109,37 @@ import { useRoute } from "vue-router";
 import { useResumeStore } from "@/stores/resume";
 
 const route = useRoute();
-const { getExperienceById } = useResumeStore();
+const { getExperienceBySlug } = useResumeStore();
 
 const experience = computed(() => {
-  const id = parseInt(route.params.id as string);
-  return getExperienceById(id);
+  const slug = route.params.slug as string;
+  return getExperienceBySlug(slug);
+});
+
+const companyOverview = computed(() => {
+  return experience.value?.companyOverview || null;
+});
+
+const descriptionWithoutOverview = computed(() => {
+  return experience.value?.description;
+});
+
+const oldAchievements = computed(() => {
+  if (!experience.value || !Array.isArray(experience.value.achievements)) return [];
+  const oldIdx = experience.value.achievements.indexOf('Old Version:');
+  const enhancedIdx = experience.value.achievements.indexOf('Enhanced Version:');
+  if (oldIdx !== -1 && enhancedIdx !== -1) {
+    return experience.value.achievements.slice(oldIdx + 1, enhancedIdx);
+  }
+  return [];
+});
+
+const enhancedAchievements = computed(() => {
+  if (!experience.value || !Array.isArray(experience.value.achievements)) return [];
+  const enhancedIdx = experience.value.achievements.indexOf('Enhanced Version:');
+  if (enhancedIdx !== -1) {
+    return experience.value.achievements.slice(enhancedIdx + 1);
+  }
+  return [];
 });
 </script>

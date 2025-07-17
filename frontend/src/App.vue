@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <div v-if="showEnvBanner" class="env-banner" :class="envClass">
+      {{ envLabel }}
+    </div>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
@@ -21,6 +24,7 @@
                 class="nav-link"
                 to="/"
                 :class="{ active: $route.path === '/' }"
+                @click="closeNavbar"
               >
                 <i class="fas fa-home me-1"></i>Home
               </router-link>
@@ -30,35 +34,27 @@
                 class="nav-link"
                 to="/about"
                 :class="{ active: $route.path === '/about' }"
+                @click="closeNavbar"
               >
                 <i class="fas fa-user me-1"></i>About
               </router-link>
             </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
+            <li class="nav-item">
+              <router-link
+                class="nav-link"
+                to="/experience"
+                :class="{ active: $route.path.startsWith('/experience') }"
+                @click="closeNavbar"
               >
                 <i class="fas fa-briefcase me-1"></i>Experience
-              </a>
-              <ul class="dropdown-menu">
-                <li v-for="experience in experiences" :key="experience.id">
-                  <router-link
-                    class="dropdown-item"
-                    :to="`/experience/${experience.id}`"
-                  >
-                    {{ experience.company }}
-                  </router-link>
-                </li>
-              </ul>
+              </router-link>
             </li>
             <li class="nav-item">
               <router-link
                 class="nav-link"
                 to="/skills"
                 :class="{ active: $route.path === '/skills' }"
+                @click="closeNavbar"
               >
                 <i class="fas fa-code me-1"></i>Skills
               </router-link>
@@ -68,6 +64,7 @@
                 class="nav-link"
                 to="/contact"
                 :class="{ active: $route.path === '/contact' }"
+                @click="closeNavbar"
               >
                 <i class="fas fa-envelope me-1"></i>Contact
               </router-link>
@@ -96,13 +93,66 @@
 
 <script setup lang="ts">
 import { useResumeStore } from "@/stores/resume";
+import { onMounted, computed } from "vue";
 
 // Use the store to get data
 const { experiences } = useResumeStore();
+
+function closeNavbar() {
+  const navbarCollapse = document.getElementById("navbarNav");
+  if (navbarCollapse && navbarCollapse.classList.contains("show")) {
+    // Bootstrap 5 uses Collapse instance
+    // @ts-ignore
+    const collapse = window.bootstrap && window.bootstrap.Collapse ? window.bootstrap.Collapse.getOrCreateInstance(navbarCollapse) : null;
+    if (collapse) {
+      collapse.hide();
+    } else {
+      // fallback: remove 'show' class
+      navbarCollapse.classList.remove("show");
+    }
+  }
+}
+
+onMounted(() => {
+  // Ensure Bootstrap's JS is loaded
+});
+
+// Environment banner logic
+const env = import.meta.env.MODE || import.meta.env.VITE_ENV || "development";
+const showEnvBanner = computed(() => env !== "production");
+const envLabel = computed(() =>
+  env === "staging" ? "Staging Environment" : env === "development" ? "Development Environment" : env
+);
+const envClass = computed(() =>
+  env === "staging" ? "env-banner-staging" : "env-banner-dev"
+);
 </script>
 
 <style scoped>
 .main-content {
   padding-top: 76px;
+}
+.env-banner {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.5rem 0;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  z-index: 2000;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.env-banner-dev {
+  background: #ffe066;
+  color: #333;
+}
+.env-banner-staging {
+  background: #ffd6e0;
+  color: #a61e4d;
+}
+.navbar {
+  margin-top: 2.2rem;
 }
 </style>

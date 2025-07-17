@@ -147,6 +147,86 @@ npm run check
 
 ---
 
+## Kubernetes Setup (Dev, Staging, Prod)
+
+### Prerequisites
+
+- **Kubernetes cluster** (local with Docker Desktop, minikube, kind, or cloud provider)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/) installed and configured
+- [Helm](https://helm.sh/docs/intro/install/) installed
+- [Docker](https://docs.docker.com/get-docker/) for building images
+- (Optional) Container registry access if not using local images
+
+### 1. Build Docker Images
+
+For local clusters (dev), build images locally:
+```sh
+# From project root
+docker build -t resume-frontend:dev -f docker/frontend/Dockerfile .
+docker build -t resume-backend:dev -f docker/backend/Dockerfile .
+```
+For staging/prod, tag and push to your registry:
+```sh
+# Example for Docker Hub
+docker tag resume-frontend:dev your-dockerhub-username/resume-frontend:staging
+docker tag resume-backend:dev your-dockerhub-username/resume-backend:staging
+docker push your-dockerhub-username/resume-frontend:staging
+docker push your-dockerhub-username/resume-backend:staging
+```
+
+### 2. Deploy with kubectl (Raw Manifests)
+
+```sh
+# Dev
+kubectl apply -f k8s/dev/
+# Staging
+kubectl apply -f k8s/staging/
+# Prod
+kubectl apply -f k8s/prod/
+```
+
+### 3. Deploy with Helm (Templated)
+
+```sh
+# Dev
+helm install resume-frontend ./k8s/helm/frontend -f k8s/helm/frontend/values-dev.yaml
+helm install resume-backend ./k8s/helm/backend -f k8s/helm/backend/values-dev.yaml
+
+# Staging
+helm install resume-frontend ./k8s/helm/frontend -f k8s/helm/frontend/values-staging.yaml
+helm install resume-backend ./k8s/helm/backend -f k8s/helm/backend/values-staging.yaml
+
+# Prod
+helm install resume-frontend ./k8s/helm/frontend -f k8s/helm/frontend/values-prod.yaml
+helm install resume-backend ./k8s/helm/backend -f k8s/helm/backend/values-prod.yaml
+```
+> If upgrading an existing release, use `helm upgrade` instead of `helm install`.
+
+### 4. Verify Deployments
+
+```sh
+kubectl get pods
+kubectl get services
+kubectl get deployments
+```
+
+### 5. Access the App
+
+You can access the frontend in Kubernetes using either NodePort or port-forwarding:
+
+- **NodePort (default for local clusters):**
+  - The frontend service is exposed on NodePort **30080**.
+  - Visit: [http://localhost:30080](http://localhost:30080)
+
+- **kubectl port-forward (alternative):**
+  - Forward a local port (e.g., 9000) to the service port (80):
+    ```sh
+    kubectl port-forward svc/resume-frontend-service 9000:80
+    ```
+  - Then visit: [http://localhost:9000](http://localhost:9000)
+
+---
+
 ## TypeScript Backend
 
 - The backend is fully migrated to TypeScript. Use `ts-node` for development and `tsc` for builds.
