@@ -19,9 +19,9 @@ yarn-error.log*
 Thumbs.db
 
 # Env files
-#.env*
-#frontend/.env*
-#backend/.env*
+.env*
+frontend/.env*
+backend/.env*
 
 # IDEs
 .vscode/
