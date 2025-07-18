@@ -243,3 +243,25 @@ Pull requests and issues are welcome!
 ## License
 
 [MIT](LICENSE) 
+
+## Deploying to GitHub Pages
+
+To deploy the frontend to GitHub Pages:
+
+1. Ensure `vite.config.ts` has the correct base path:
+   ```js
+   export default defineConfig({
+     base: '/resume-website-react/',
+     // ...rest of your config
+   })
+   ```
+2. Build the frontend:
+   ```sh
+   npm run build --prefix frontend
+   ```
+3. Deploy to GitHub Pages:
+   ```sh
+   npm run deploy --prefix frontend
+   ```
+
+The site will be available at: https://acompletemess.github.io/resume-website-react/ 

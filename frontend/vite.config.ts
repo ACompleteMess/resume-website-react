@@ -6,6 +6,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   console.log("DEBUG VITE_HOST:", env.VITE_HOST);
   return {
+    base: '/resume-website-react/',
     plugins: [vue()],
     resolve: {
       alias: {
