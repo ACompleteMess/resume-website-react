@@ -334,24 +334,22 @@ Pull requests and issues are welcome!
 
 [MIT](LICENSE) 
 
-## Deploying to GitHub Pages
+## Deploying to GitHub Pages (Create React App)
 
-To deploy the frontend to GitHub Pages:
-
-1. Ensure `vite.config.ts` has the correct base path:
-   ```js
-   export default defineConfig({
-     base: '/resume-website-react/',
-     // ...rest of your config
-   })
+1. Ensure your `frontend/package.json` includes:
+   ```json
+   "homepage": "https://acompletemess.github.io/resume-website-react/",
+   "predeploy": "npm run build",
+   "deploy": "gh-pages -d build"
    ```
-2. Build the frontend:
+2. Install gh-pages if not already:
    ```sh
-   npm run build --prefix frontend
+   npm install --save-dev gh-pages
    ```
-3. Deploy to GitHub Pages:
+3. Deploy:
    ```sh
-   npm run deploy --prefix frontend
+   cd frontend
+   npm run deploy
    ```
 
-The site will be available at: https://acompletemess.github.io/resume-website-react/ 
+Your site will be available at: https://acompletemess.github.io/resume-website-react/ 

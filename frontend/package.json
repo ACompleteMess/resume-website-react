@@ -29,6 +29,9 @@
     "type-check": "tsc --noEmit || exit 0",
     "check": "npm run lint && npm run format && npm run type-check && npm run test:unit"
   },
+  "homepage": "https://acompletemess.github.io/resume-website-react/",
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d build",
   "eslintConfig": {
     "extends": [
       "react-app",
