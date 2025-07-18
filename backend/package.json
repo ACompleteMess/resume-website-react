@@ -9,7 +9,7 @@
     "prod": "cross-env NODE_ENV=production ts-node server.ts",
     "build": "tsc",
     "test": "echo \"No backend tests yet\" && exit 0",
-    "lint": "eslint . --ext .js,.cjs,.mjs,.ts,.tsx",
+    "lint": "eslint . --ext .ts,.tsx --ignore-pattern '*.js'",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "type-check": "tsc --noEmit",

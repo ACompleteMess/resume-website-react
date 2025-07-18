@@ -1,5 +1,5 @@
-import React from 'react';
-import { useResumeStore } from '../stores/resumeStore';
+import React from "react";
+import { useResumeStore } from "../stores/resumeStore";
 
 const ContactView: React.FC = () => {
   const { personalInfo } = useResumeStore();
@@ -36,7 +36,11 @@ const ContactView: React.FC = () => {
                       </li>
                       <li className="mb-3">
                         <i className="fab fa-linkedin text-primary me-2"></i>
-                        <a href={`https://${personalInfo.linkedin}`} target="_blank" rel="noopener noreferrer">
+                        <a
+                          href={`https://${personalInfo.linkedin}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           {personalInfo.linkedin}
                         </a>
                       </li>
@@ -45,15 +49,15 @@ const ContactView: React.FC = () => {
                   <div className="col-md-6">
                     <h5>Get in Touch</h5>
                     <p>
-                      I'm always interested in hearing about new opportunities and 
-                      connecting with fellow professionals. Feel free to reach out 
-                      if you'd like to discuss potential collaborations, 
-                      opportunities, or just want to say hello!
+                      I'm always interested in hearing about new opportunities
+                      and connecting with fellow professionals. Feel free to
+                      reach out if you'd like to discuss potential
+                      collaborations, opportunities, or just want to say hello!
                     </p>
                     <p>
-                      Whether you're looking to discuss a potential role, 
-                      collaborate on a project, or just want to connect, 
-                      I'd love to hear from you.
+                      Whether you're looking to discuss a potential role,
+                      collaborate on a project, or just want to connect, I'd
+                      love to hear from you.
                     </p>
                   </div>
                 </div>
@@ -66,4 +70,4 @@ const ContactView: React.FC = () => {
   );
 };
 
-export default ContactView; 
+export default ContactView;

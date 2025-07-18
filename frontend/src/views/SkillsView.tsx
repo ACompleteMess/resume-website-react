@@ -1,5 +1,5 @@
-import React from 'react';
-import { useResumeStore } from '../stores/resumeStore';
+import React from "react";
+import { useResumeStore } from "../stores/resumeStore";
 
 const SkillsView: React.FC = () => {
   const { skillCategories } = useResumeStore();
@@ -27,8 +27,8 @@ const SkillsView: React.FC = () => {
                           <span className="text-muted">{skill.level}%</span>
                         </div>
                         <div className="progress">
-                          <div 
-                            className="progress-bar" 
+                          <div
+                            className="progress-bar"
                             style={{ width: `${skill.level}%` }}
                           ></div>
                         </div>
@@ -45,4 +45,4 @@ const SkillsView: React.FC = () => {
   );
 };
 
-export default SkillsView; 
+export default SkillsView;

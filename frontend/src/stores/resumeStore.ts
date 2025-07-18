@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 // Types for better TypeScript support
 interface PersonalInfo {
@@ -61,12 +61,12 @@ interface ResumeStore {
   personalInfo: PersonalInfo;
   experiences: Experience[];
   skillCategories: SkillCategory[];
-  
+
   // Computed (as getters)
   totalExperience: number;
   filteredExperiences: Experience[];
   groupedExperiences: GroupedExperience[];
-  
+
   // Actions
   getExperienceById: (id: number) => Experience | undefined;
   getExperienceBySlug: (slug: string) => Experience | undefined;
@@ -463,4 +463,4 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
   getExperienceBySlug: (slug: string) => {
     return get().experiences.find((exp) => exp.slug === slug);
   },
-})); 
+}));

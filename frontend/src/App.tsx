@@ -1,41 +1,43 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { useResumeStore } from './stores/resumeStore';
-import HomeView from './views/HomeView';
-import AboutView from './views/AboutView';
-import ExperienceView from './views/ExperienceView';
-import ExperienceDetailView from './views/ExperienceDetailView';
-import SkillsView from './views/SkillsView';
-import ContactView from './views/ContactView';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useLocation,
+} from "react-router-dom";
+import HomeView from "./views/HomeView";
+import AboutView from "./views/AboutView";
+import ExperienceView from "./views/ExperienceView";
+import ExperienceDetailView from "./views/ExperienceDetailView";
+import SkillsView from "./views/SkillsView";
+import ContactView from "./views/ContactView";
 
 // Import Bootstrap CSS and JS
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 // Import custom styles
-import './assets/main.css';
+import "./assets/main.css";
 
 // Environment banner component
 const EnvironmentBanner: React.FC = () => {
-  const env = process.env.NODE_ENV || 'development';
-  const showEnvBanner = env !== 'production';
-  
+  const env = process.env.NODE_ENV || "development";
+  const showEnvBanner = env !== "production";
+
   if (!showEnvBanner) return null;
 
-  const envLabel = env === 'development' 
-    ? 'Development Environment' 
-    : env === 'test'
-      ? 'Test Environment'
-      : env;
-  
-  const envClass = env === 'development' ? 'env-banner-dev' : 'env-banner-test';
+  const envLabel =
+    env === "development"
+      ? "Development Environment"
+      : env === "test"
+        ? "Test Environment"
+        : env;
 
-  return (
-    <div className={`env-banner ${envClass}`}>
-      {envLabel}
-    </div>
-  );
+  const envClass = env === "development" ? "env-banner-dev" : "env-banner-test";
+
+  return <div className={`env-banner ${envClass}`}>{envLabel}</div>;
 };
 
 // Navigation component
@@ -43,17 +45,20 @@ const Navigation: React.FC = () => {
   const location = useLocation();
 
   const closeNavbar = () => {
-    const navbarCollapse = document.getElementById('navbarNav');
-    if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+    const navbarCollapse = document.getElementById("navbarNav");
+    if (navbarCollapse && navbarCollapse.classList.contains("show")) {
       // Bootstrap 5 uses Collapse instance
-      const collapse = (window as any).bootstrap && (window as any).bootstrap.Collapse
-        ? (window as any).bootstrap.Collapse.getOrCreateInstance(navbarCollapse)
-        : null;
+      const collapse =
+        (window as any).bootstrap && (window as any).bootstrap.Collapse
+          ? (window as any).bootstrap.Collapse.getOrCreateInstance(
+              navbarCollapse,
+            )
+          : null;
       if (collapse) {
         collapse.hide();
       } else {
         // fallback: remove 'show' class
-        navbarCollapse.classList.remove('show');
+        navbarCollapse.classList.remove("show");
       }
     }
   };
@@ -76,7 +81,7 @@ const Navigation: React.FC = () => {
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
               <Link
-                className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
+                className={`nav-link ${location.pathname === "/" ? "active" : ""}`}
                 to="/"
                 onClick={closeNavbar}
               >
@@ -85,7 +90,7 @@ const Navigation: React.FC = () => {
             </li>
             <li className="nav-item">
               <Link
-                className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}
+                className={`nav-link ${location.pathname === "/about" ? "active" : ""}`}
                 to="/about"
                 onClick={closeNavbar}
               >
@@ -94,7 +99,7 @@ const Navigation: React.FC = () => {
             </li>
             <li className="nav-item">
               <Link
-                className={`nav-link ${location.pathname.startsWith('/experience') ? 'active' : ''}`}
+                className={`nav-link ${location.pathname.startsWith("/experience") ? "active" : ""}`}
                 to="/experience"
                 onClick={closeNavbar}
               >
@@ -103,7 +108,7 @@ const Navigation: React.FC = () => {
             </li>
             <li className="nav-item">
               <Link
-                className={`nav-link ${location.pathname === '/skills' ? 'active' : ''}`}
+                className={`nav-link ${location.pathname === "/skills" ? "active" : ""}`}
                 to="/skills"
                 onClick={closeNavbar}
               >
@@ -112,7 +117,7 @@ const Navigation: React.FC = () => {
             </li>
             <li className="nav-item">
               <Link
-                className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`}
+                className={`nav-link ${location.pathname === "/contact" ? "active" : ""}`}
                 to="/contact"
                 onClick={closeNavbar}
               >
@@ -146,14 +151,17 @@ function App() {
       <div id="app">
         <EnvironmentBanner />
         <Navigation />
-        
+
         {/* Main Content */}
         <main className="main-content">
           <Routes>
             <Route path="/" element={<HomeView />} />
             <Route path="/about" element={<AboutView />} />
             <Route path="/experience" element={<ExperienceView />} />
-            <Route path="/experience/:slug" element={<ExperienceDetailView />} />
+            <Route
+              path="/experience/:slug"
+              element={<ExperienceDetailView />}
+            />
             <Route path="/skills" element={<SkillsView />} />
             <Route path="/contact" element={<ContactView />} />
           </Routes>

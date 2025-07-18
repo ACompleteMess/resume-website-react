@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useResumeStore } from '../stores/resumeStore';
+import React from "react";
+import { Link } from "react-router-dom";
+import { useResumeStore } from "../stores/resumeStore";
 
 const HomeView: React.FC = () => {
   const { personalInfo } = useResumeStore();
@@ -15,9 +15,7 @@ const HomeView: React.FC = () => {
                 Hello, I'm
                 <span className="name-highlight"> {personalInfo.name}</span>
               </h1>
-              <p className="lead mb-4">
-                {personalInfo.summary}
-              </p>
+              <p className="lead mb-4">{personalInfo.summary}</p>
               <div className="d-flex gap-3">
                 <Link to="/about" className="btn btn-primary btn-lg">
                   <i className="fas fa-user me-2"></i>Learn More
@@ -39,4 +37,4 @@ const HomeView: React.FC = () => {
   );
 };
 
-export default HomeView; 
+export default HomeView;

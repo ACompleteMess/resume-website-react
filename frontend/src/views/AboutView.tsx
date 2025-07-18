@@ -1,5 +1,5 @@
-import React from 'react';
-import { useResumeStore } from '../stores/resumeStore';
+import React from "react";
+import { useResumeStore } from "../stores/resumeStore";
 
 const AboutView: React.FC = () => {
   const { personalInfo } = useResumeStore();
@@ -27,12 +27,12 @@ const AboutView: React.FC = () => {
                       the intersection of software, engineering, and business.
                       I've applied these skills by living, working, and managing
                       teams both in-person and remotely across Australia, Asia,
-                      Europe, and the Americas. Through these diverse experiences,
-                      I've built deep expertise in cloud, DevSecOps, automation,
-                      and agile delivery—driving transformation and business
-                      agility, mentoring talent, and creating world-class products
-                      and platforms that serve a global community of customers and
-                      consumers.
+                      Europe, and the Americas. Through these diverse
+                      experiences, I've built deep expertise in cloud,
+                      DevSecOps, automation, and agile delivery—driving
+                      transformation and business agility, mentoring talent, and
+                      creating world-class products and platforms that serve a
+                      global community of customers and consumers.
                     </p>
                     <h5>Education</h5>
                     <ul className="list-unstyled">
@@ -50,15 +50,17 @@ const AboutView: React.FC = () => {
                         Electrical Engineering & Engineering Management
                       </li>
                       <li>
-                        <i className="fas fa-university text-primary me-2"></i>Miami
-                        University, 2013
+                        <i className="fas fa-university text-primary me-2"></i>
+                        Miami University, 2013
                       </li>
                     </ul>
                     <h5 className="mt-4">Professional Involvement</h5>
                     <div>
                       <div className="mb-3">
-                        <strong>Mentor</strong><br />
-                        First Robotics Competition (FRC) • February 2023 - Present
+                        <strong>Mentor</strong>
+                        <br />
+                        First Robotics Competition (FRC) • February 2023 -
+                        Present
                         <ul>
                           <li>
                             Started a new robotics program at an all girls high
@@ -75,30 +77,32 @@ const AboutView: React.FC = () => {
                         </ul>
                       </div>
                       <div className="mb-3">
-                        <strong>Founding Member</strong><br />
-                        Allianz Technology, DevOps Cultural Board • January 2020 -
-                        August 2021
+                        <strong>Founding Member</strong>
+                        <br />
+                        Allianz Technology, DevOps Cultural Board • January 2020
+                        - August 2021
                         <ul>
                           <li>
-                            Collaborated with global leaders and board members to
-                            develop and implement solutions, resulting in
+                            Collaborated with global leaders and board members
+                            to develop and implement solutions, resulting in
                             successful launches of collaboration tools,
                             automation, and cross-training within the company.
                           </li>
                           <li>
-                            Promoted DevOps culture, enhancing team collaboration,
-                            efficiency, and knowledge sharing.
+                            Promoted DevOps culture, enhancing team
+                            collaboration, efficiency, and knowledge sharing.
                           </li>
                           <li>
-                            Championed engineering processes and best practices by
-                            leading lightning talks and securing $100,000 in
+                            Championed engineering processes and best practices
+                            by leading lightning talks and securing $100,000 in
                             funding to develop and support community tooling
                             including GitHub, Actions, and FluxCD.
                           </li>
                         </ul>
                       </div>
                       <div className="mb-3">
-                        <strong>Founding Member</strong><br />
+                        <strong>Founding Member</strong>
+                        <br />
                         OpinionLab, Cultural Committee • November 2015 - August
                         2017
                         <ul>
@@ -107,22 +111,25 @@ const AboutView: React.FC = () => {
                             rooms, and birthdays/anniversary celebrations.
                           </li>
                           <li>
-                            Successfully integrated cultural and diversity levers
-                            into the hiring process for the technology department.
+                            Successfully integrated cultural and diversity
+                            levers into the hiring process for the technology
+                            department.
                           </li>
                         </ul>
                       </div>
                       <div className="mb-3">
-                        <strong>DevOps Clan Member</strong><br />
+                        <strong>DevOps Clan Member</strong>
+                        <br />
                         Suncorp Group • May 2014 - October 2015
                         <ul>
                           <li>
-                            Participated in DevOps best practices and how best to
-                            rollout DevOps on a domain-wide scale.
+                            Participated in DevOps best practices and how best
+                            to rollout DevOps on a domain-wide scale.
                           </li>
                           <li>
                             Conducted monthly lightning talks on DevOps and
-                            organized quarterly company FedEx days (hack-a-thons).
+                            organized quarterly company FedEx days
+                            (hack-a-thons).
                           </li>
                           <li>
                             Hosted 3 public meetups on current CI/CD and DevOps
@@ -131,7 +138,8 @@ const AboutView: React.FC = () => {
                         </ul>
                       </div>
                       <div className="mb-3">
-                        <strong>Graduate Ambassador</strong><br />
+                        <strong>Graduate Ambassador</strong>
+                        <br />
                         Suncorp Group • August 2013 - October 2015
                         <ul>
                           <li>
@@ -139,8 +147,8 @@ const AboutView: React.FC = () => {
                             graduates and working students.
                           </li>
                           <li>
-                            Mentored 10 new employees and graduates to support the
-                            adjustment to the corporate environment.
+                            Mentored 10 new employees and graduates to support
+                            the adjustment to the corporate environment.
                           </li>
                           <li>
                             Supported Suncorp at career fairs at 10 universities
@@ -160,4 +168,4 @@ const AboutView: React.FC = () => {
   );
 };
 
-export default AboutView; 
+export default AboutView;

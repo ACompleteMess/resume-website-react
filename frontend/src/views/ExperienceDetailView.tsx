@@ -1,11 +1,11 @@
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { useResumeStore } from '../stores/resumeStore';
+import React from "react";
+import { useParams, Link } from "react-router-dom";
+import { useResumeStore } from "../stores/resumeStore";
 
 const ExperienceDetailView: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const { getExperienceBySlug } = useResumeStore();
-  
+
   const experience = slug ? getExperienceBySlug(slug) : null;
 
   if (!experience) {
@@ -44,7 +44,7 @@ const ExperienceDetailView: React.FC = () => {
                 <i className="fas fa-arrow-left me-2"></i>Back to Experience
               </Link>
             </div>
-            
+
             <div className="card shadow mb-4">
               <div className="card-body p-4">
                 <div className="row">
@@ -65,14 +65,14 @@ const ExperienceDetailView: React.FC = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 {experience.companyOverview && (
                   <div className="mb-4">
                     <h5>Company Overview</h5>
                     <p className="text-muted">{experience.companyOverview}</p>
                   </div>
                 )}
-                
+
                 <div className="mb-4">
                   <h5>Description</h5>
                   <p>{experience.description}</p>
@@ -99,7 +99,7 @@ const ExperienceDetailView: React.FC = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="col-lg-6">
                 <div className="card shadow mb-4">
                   <div className="card-header bg-success text-white">
@@ -129,4 +129,4 @@ const ExperienceDetailView: React.FC = () => {
   );
 };
 
-export default ExperienceDetailView; 
+export default ExperienceDetailView;

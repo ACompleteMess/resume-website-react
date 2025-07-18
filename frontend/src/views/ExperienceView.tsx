@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useResumeStore } from '../stores/resumeStore';
+import React from "react";
+import { Link } from "react-router-dom";
+import { useResumeStore } from "../stores/resumeStore";
 
 const ExperienceView: React.FC = () => {
   const { experiences } = useResumeStore();
@@ -30,14 +30,17 @@ const ExperienceView: React.FC = () => {
                     <strong>Technologies:</strong>
                     <div className="mt-2">
                       {experience.technologies.map((tech, index) => (
-                        <span key={index} className="badge bg-primary me-1 mb-1">
+                        <span
+                          key={index}
+                          className="badge bg-primary me-1 mb-1"
+                        >
                           {tech}
                         </span>
                       ))}
                     </div>
                   </div>
-                  <Link 
-                    to={`/experience/${experience.slug}`} 
+                  <Link
+                    to={`/experience/${experience.slug}`}
                     className="btn btn-outline-primary"
                   >
                     View Details
@@ -52,4 +55,4 @@ const ExperienceView: React.FC = () => {
   );
 };
 
-export default ExperienceView; 
+export default ExperienceView;
