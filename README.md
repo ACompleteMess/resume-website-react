@@ -1,18 +1,17 @@
 # Resume Website Monorepo
 
-A modern, containerized web application for showcasing your resume, built with Vue.js (frontend) and Node.js (Express, TypeScript) backend. Supports local development, Docker, and Kubernetes workflows.
+A modern, containerized web application for showcasing your resume, built with React (frontend) and Node.js (Express, TypeScript) backend. Supports local development, Docker, and Kubernetes workflows.
 
 ---
 
 ## Dependencies & Tooling
 
 **Frontend:**
-- Vue 3
-- Vite
+- React 19
 - TypeScript
-- Pinia (state management)
-- Vue Router
-- Bootstrap
+- React Router DOM
+- Zustand (state management)
+- Bootstrap 5
 - Font Awesome
 
 **Backend:**
@@ -23,13 +22,11 @@ A modern, containerized web application for showcasing your resume, built with V
 - dotenv
 
 **Dev/Build Tools:**
-- Vitest (frontend unit testing)
-- @vue/test-utils
-- ESLint (with Vue, TypeScript, Prettier configs)
+- Jest & React Testing Library (frontend unit testing)
+- ESLint (with React, TypeScript, Prettier configs)
 - Prettier
-- vue-tsc (TypeScript type checking for Vue)
+- TypeScript compiler
 - ts-node (backend dev)
-- tsc (TypeScript compiler)
 - rimraf (clean scripts)
 - concurrently (run multiple scripts)
 - cross-env (set env vars in scripts)
@@ -44,7 +41,7 @@ A modern, containerized web application for showcasing your resume, built with V
 
 ## Monorepo Structure
 
-- `frontend/` — Vue 3 + Vite + TypeScript app
+- `frontend/` — React + TypeScript app
 - `backend/` — Node.js + Express + TypeScript API
 - `docker/` — Dockerfiles and Nginx config
 - `k8s/` — Kubernetes manifests (dev, staging, prod)
@@ -96,7 +93,7 @@ npm run check
 
 ## Environment Variables & Port Strategy
 
-- **Environment variables** are now managed by Docker Compose and Kubernetes manifests. No `.env.*` files are required in the repo.
+- **Environment variables** are managed by Docker Compose and Kubernetes manifests. Environment-specific `.env` files are used for different deployments.
 - **Ports:**
   - **Development:** 9000 (frontend), 9001 (backend)
   - **Staging:** 9002 (frontend), 9003 (backend)
@@ -107,11 +104,23 @@ npm run check
 
 ## Testing & Quality
 
-- **Frontend unit tests:**
+### Frontend Testing
+- **Unit tests** using Jest and React Testing Library
+- **Test location:** `frontend/src/resumeStore.test.tsx`
+- **Run tests:**
   ```sh
-  npm run test --workspace frontend
+  npm run test:unit --workspace frontend
   ```
-- **Backend:** No backend unit tests (API is simple and covered by health checks).
+- **Current test coverage:**
+  - ResumeStore data structure validation
+  - Required fields validation
+  - Data type validation
+
+### Backend Testing
+- **Health checks** via API endpoints
+- **No unit tests yet** (API is simple and covered by health checks)
+
+### Code Quality
 - **Full code quality check:**
   ```sh
   npm run check
@@ -120,6 +129,12 @@ npm run check
   ```sh
   node scripts/health-check.js [development|staging|production]
   ```
+
+### Test Structure
+The frontend includes comprehensive tests for the resume data store:
+- Validates all required fields exist (`id`, `slug`, `company`, `position`, `duration`, `location`, `description`, `technologies`, `achievements`)
+- Ensures correct data types (numbers for IDs, strings for text, arrays for technologies/achievements)
+- Tests are resilient to adding optional fields but will break if required fields are removed or data types change
 
 ---
 
@@ -224,6 +239,36 @@ You can access the frontend in Kubernetes using either NodePort or port-forwardi
     kubectl port-forward svc/resume-frontend-service 9000:80
     ```
   - Then visit: [http://localhost:9000](http://localhost:9000)
+
+---
+
+## Development Workflow
+
+### Code Quality Checks
+The project includes comprehensive quality checks that run automatically:
+
+1. **Linting** - ESLint checks for code style and potential issues
+2. **Formatting** - Prettier ensures consistent code formatting
+3. **Type Checking** - TypeScript compiler validates types
+4. **Testing** - Jest runs unit tests
+
+Run all checks with:
+```sh
+npm run check
+```
+
+### Adding New Tests
+When adding new features, consider adding tests to maintain quality:
+
+1. **Frontend tests** go in `frontend/src/` with `.test.tsx` extension
+2. **Backend tests** can be added to `backend/` (not implemented yet)
+3. **Integration tests** can use the health check scripts as a starting point
+
+### State Management
+The frontend uses Zustand for state management with a centralized resume store:
+- **Location:** `frontend/src/stores/resumeStore.ts`
+- **Tests:** `frontend/src/resumeStore.test.tsx`
+- **Features:** Personal info, experiences, skills, and computed properties
 
 ---
 
