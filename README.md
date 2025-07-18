@@ -58,15 +58,48 @@ A modern, containerized web application for showcasing your resume, built with R
 npm install
 ```
 
-### 2. Start frontend and backend (development):
+### 2. Start the app (frontend and backend together):
 ```sh
-# Start frontend
-npm run frontend
-# Start backend (in another terminal)
-npm run backend
+# Development
+npm run start:dev
+# Staging
+npm run start:staging
+# Production
+npm run start:prod
 ```
-- Frontend: [http://localhost:9000](http://localhost:9000)
-- Backend: [http://localhost:9001](http://localhost:9001)
+- The appropriate frontend and backend servers will start together for the selected environment.
+- Frontend/Backend URLs by environment:
+  - Development: [http://localhost:9000](http://localhost:9000) / [http://localhost:9001](http://localhost:9001)
+  - Staging: [http://localhost:9002](http://localhost:9002) / [http://localhost:9003](http://localhost:9003)
+  - Production: [http://localhost:9004](http://localhost:9004) / [http://localhost:9005](http://localhost:9005)
+
+---
+
+#### Starting Frontend and Backend Individually
+
+You can also start the frontend and backend servers separately in different terminals. This is useful for advanced workflows or debugging.
+
+**Start Frontend:**
+```sh
+# Development
+npm run frontend
+# Staging
+npm run frontend:staging
+# Production
+npm run frontend:prod
+```
+
+**Start Backend:**
+```sh
+# Development
+npm run backend
+# Staging
+npm run backend:staging
+# Production
+npm run backend:prod
+```
+
+---
 
 ### 3. Health Check (ensure both servers are running):
 ```sh
@@ -82,10 +115,13 @@ npm run check
 
 ## Scripts (from project root)
 
-- `npm run frontend` — Start frontend in development mode
+- `npm run start:dev` — Start both frontend and backend in development mode (recommended for local dev)
+- `npm run start:staging` — Start both frontend and backend in staging mode
+- `npm run start:prod` — Start both frontend and backend in production mode
+- `npm run frontend` — Start frontend in development mode (advanced/individual)
 - `npm run frontend:staging` — Start frontend in staging mode
 - `npm run frontend:prod` — Start frontend in production mode
-- `npm run backend` — Start backend in development mode
+- `npm run backend` — Start backend in development mode (advanced/individual)
 - `npm run backend:staging` — Start backend in staging mode
 - `npm run backend:prod` — Start backend in production mode
 - `npm run check` — Lint, format, type-check, and test both frontend and backend
