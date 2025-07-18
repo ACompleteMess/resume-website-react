@@ -1,18 +1,19 @@
 # Resume Website Monorepo
 
-A modern, containerized web application for showcasing your resume, built with Vue.js (frontend) and Node.js (Express, TypeScript) backend. Supports local development, Docker, and Kubernetes workflows.
+> **⚠️ Testing Note:** Some component tests (HomeView, ExperienceView, ExperienceDetailView) are currently disabled due to React Router DOM module resolution issues in the Jest test environment. The working tests cover data validation, ContactView, AboutView, and SkillsView functionality.
+
+A modern, containerized web application for showcasing your resume, built with React (frontend) and Node.js (Express, TypeScript) backend. Supports local development, Docker, and Kubernetes workflows.
 
 ---
 
 ## Dependencies & Tooling
 
 **Frontend:**
-- Vue 3
-- Vite
+- React 19
 - TypeScript
-- Pinia (state management)
-- Vue Router
-- Bootstrap
+- React Router DOM
+- Zustand (state management)
+- Bootstrap 5
 - Font Awesome
 
 **Backend:**
@@ -23,13 +24,11 @@ A modern, containerized web application for showcasing your resume, built with V
 - dotenv
 
 **Dev/Build Tools:**
-- Vitest (frontend unit testing)
-- @vue/test-utils
-- ESLint (with Vue, TypeScript, Prettier configs)
+- Jest & React Testing Library (frontend unit testing)
+- ESLint (with React, TypeScript, Prettier configs)
 - Prettier
-- vue-tsc (TypeScript type checking for Vue)
+- TypeScript compiler
 - ts-node (backend dev)
-- tsc (TypeScript compiler)
 - rimraf (clean scripts)
 - concurrently (run multiple scripts)
 - cross-env (set env vars in scripts)
@@ -44,7 +43,7 @@ A modern, containerized web application for showcasing your resume, built with V
 
 ## Monorepo Structure
 
-- `frontend/` — Vue 3 + Vite + TypeScript app
+- `frontend/` — React + TypeScript app
 - `backend/` — Node.js + Express + TypeScript API
 - `docker/` — Dockerfiles and Nginx config
 - `k8s/` — Kubernetes manifests (dev, staging, prod)
@@ -59,12 +58,48 @@ A modern, containerized web application for showcasing your resume, built with V
 npm install
 ```
 
-### 2. Start both frontend and backend (development):
+### 2. Start the app (frontend and backend together):
 ```sh
+# Development
 npm run start:dev
+# Staging
+npm run start:staging
+# Production
+npm run start:prod
 ```
-- Frontend: [http://localhost:9000](http://localhost:9000)
-- Backend: [http://localhost:9001](http://localhost:9001)
+- The appropriate frontend and backend servers will start together for the selected environment.
+- Frontend/Backend URLs by environment:
+  - Development: [http://localhost:9000](http://localhost:9000) / [http://localhost:9001](http://localhost:9001)
+  - Staging: [http://localhost:9002](http://localhost:9002) / [http://localhost:9003](http://localhost:9003)
+  - Production: [http://localhost:9004](http://localhost:9004) / [http://localhost:9005](http://localhost:9005)
+
+---
+
+#### Starting Frontend and Backend Individually
+
+You can also start the frontend and backend servers separately in different terminals. This is useful for advanced workflows or debugging.
+
+**Start Frontend:**
+```sh
+# Development
+npm run frontend
+# Staging
+npm run frontend:staging
+# Production
+npm run frontend:prod
+```
+
+**Start Backend:**
+```sh
+# Development
+npm run backend
+# Staging
+npm run backend:staging
+# Production
+npm run backend:prod
+```
+
+---
 
 ### 3. Health Check (ensure both servers are running):
 ```sh
@@ -80,15 +115,18 @@ npm run check
 
 ## Scripts (from project root)
 
-- `npm run start:dev` — Start both servers in dev mode (uses environment variables or defaults)
-- `npm run start:staging` — Start both servers in staging mode
-- `npm run start:prod` — Start both servers in production mode
-- `npm run build` — Build both frontend and backend for production
+- `npm run start:dev` — Start both frontend and backend in development mode (recommended for local dev)
+- `npm run start:staging` — Start both frontend and backend in staging mode
+- `npm run start:prod` — Start both frontend and backend in production mode
+- `npm run frontend` — Start frontend in development mode (advanced/individual)
+- `npm run frontend:staging` — Start frontend in staging mode
+- `npm run frontend:prod` — Start frontend in production mode
+- `npm run backend` — Start backend in development mode (advanced/individual)
+- `npm run backend:staging` — Start backend in staging mode
+- `npm run backend:prod` — Start backend in production mode
 - `npm run check` — Lint, format, type-check, and test both frontend and backend
-- `npm run clean` — Remove build artifacts
-- `npm run clean:all` — Remove build artifacts, node_modules, and lock files
+- `npm run clean` — Reinstall dependencies for all workspaces
 - `node scripts/health-check.js [env]` — Health check for any environment (default: development)
-- `npm run docker:logs` — View logs from Docker Compose services
 
 > All scripts are orchestrated from the root using npm workspaces. You can also run scripts in each workspace using `npm run <script> --workspace <workspace>`.
 
@@ -96,7 +134,7 @@ npm run check
 
 ## Environment Variables & Port Strategy
 
-- **Environment variables** are now managed by Docker Compose and Kubernetes manifests. No `.env.*` files are required in the repo.
+- **Environment variables** are managed by Docker Compose and Kubernetes manifests. Environment-specific `.env` files are used for different deployments.
 - **Ports:**
   - **Development:** 9000 (frontend), 9001 (backend)
   - **Staging:** 9002 (frontend), 9003 (backend)
@@ -107,11 +145,25 @@ npm run check
 
 ## Testing & Quality
 
-- **Frontend unit tests:**
+### Frontend Testing
+- **Basic unit tests** using Jest and React Testing Library
+- **Test location:** `frontend/src/resumeStore.test.tsx` and `frontend/src/views/*.test.tsx`
+- **Run tests:**
   ```sh
-  npm run test --workspace frontend
+  npm run test:unit --workspace frontend
   ```
-- **Backend:** No backend unit tests (API is simple and covered by health checks).
+- **Current test coverage (21 tests):**
+  - ResumeStore data structure validation (2 tests)
+  - ContactView component tests (7 tests)
+  - AboutView component tests (5 tests)
+  - SkillsView component tests (6 tests)
+- **Note:** Some component tests (HomeView, ExperienceView, ExperienceDetailView) are disabled due to React Router DOM module resolution issues
+
+### Backend Testing
+- **Health checks** via API endpoints
+- **No unit tests yet** (API is simple and covered by health checks)
+
+### Code Quality
 - **Full code quality check:**
   ```sh
   npm run check
@@ -121,22 +173,26 @@ npm run check
   node scripts/health-check.js [development|staging|production]
   ```
 
+### Test Structure
+The frontend includes tests for data validation and component rendering:
+- **Data validation:** Validates all required fields exist (`id`, `slug`, `company`, `position`, `duration`, `location`, `description`, `technologies`, `achievements`)
+- **Component tests:** Tests ContactView, AboutView, and SkillsView component rendering and functionality
+- **Current status:** 21 passing tests across 4 test suites
+- **Disabled tests:** HomeView, ExperienceView, ExperienceDetailView (React Router DOM module resolution issue)
+- **Missing:** Integration tests, user interaction tests, routing component tests
+
 ---
 
 ## Docker & Kubernetes
 
 ### Docker Compose
+- Basic Docker Compose setup with frontend and backend services
 - Healthchecks are configured for both frontend (`/`) and backend (`/api/health`) services.
 - Uses environment-specific `.env` files at the root for Compose only (not checked into repo).
-- Example usage:
-  ```sh
-  npm run docker:up:dev
-  npm run docker:up:staging  
-  npm run docker:up:prod
-  ```
+- **Note:** Docker scripts not yet implemented in package.json
 
 ### Kubernetes
-- Manifests in `k8s/` for dev, staging, prod.
+- Basic Kubernetes manifests in `k8s/` for dev, staging, prod.
 - Liveness and readiness probes are set for both frontend and backend.
 - **Image pull policy:**
   - `Never` for dev (uses local images)
@@ -144,6 +200,7 @@ npm run check
   - `Always` for prod
 - Use Helm for templated deployments.
 - For local dev, ensure images are built locally and use `imagePullPolicy: Never`.
+- **Note:** Requires Docker images to be built and pushed to registry
 
 ---
 
@@ -224,6 +281,39 @@ You can access the frontend in Kubernetes using either NodePort or port-forwardi
     kubectl port-forward svc/resume-frontend-service 9000:80
     ```
   - Then visit: [http://localhost:9000](http://localhost:9000)
+
+---
+
+## Development Workflow
+
+### Code Quality Checks
+The project includes basic quality checks that run automatically:
+
+1. **Linting** - ESLint checks for code style and potential issues
+2. **Formatting** - Prettier ensures consistent code formatting
+3. **Type Checking** - TypeScript compiler validates types
+4. **Testing** - Jest runs unit tests (limited coverage)
+
+Run all checks with:
+```sh
+npm run check
+```
+
+### Adding New Tests
+The current test coverage is minimal. When adding new features, consider expanding test coverage:
+
+1. **Frontend tests** go in `frontend/src/` with `.test.tsx` extension
+   - Currently only testing data store, need component tests
+   - Consider testing user interactions and component rendering
+2. **Backend tests** can be added to `backend/` (not implemented yet)
+3. **Integration tests** can use the health check scripts as a starting point
+4. **Priority:** Add tests for React components and user interactions
+
+### State Management
+The frontend uses Zustand for state management with a centralized resume store:
+- **Location:** `frontend/src/stores/resumeStore.ts`
+- **Tests:** `frontend/src/resumeStore.test.tsx`
+- **Features:** Personal info, experiences, skills, and computed properties
 
 ---
 

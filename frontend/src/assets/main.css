@@ -163,3 +163,68 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #0056b3;
 }
+
+/* Environment banner styles */
+.env-banner {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.5rem 0;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  z-index: 2000;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.env-banner-dev {
+  background: #ffe066;
+  color: #333;
+}
+
+.env-banner-staging {
+  background: #ffd6e0;
+  color: #a61e4d;
+}
+
+.navbar {
+  margin-top: 2.2rem;
+}
+
+/* Hero section styles */
+.hero-section {
+  /* Slightly darkened gradient for better balance */
+  background: linear-gradient(135deg, #b3b8ee 0%, #a5a1d6 100%);
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.profile-image {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.hero-section .lead {
+  color: #222;
+}
+
+.name-highlight {
+  color: #e6e6fa;
+}
+
+/* Main content padding */
+.main-content {
+  padding-top: 76px;
+}

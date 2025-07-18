@@ -1,5 +1,4 @@
-import { defineStore } from "pinia";
-import { ref, computed } from "vue";
+import { create } from "zustand";
 
 // Types for better TypeScript support
 interface PersonalInfo {
@@ -15,6 +14,7 @@ interface PersonalInfo {
     years: string;
   };
   summary: string;
+  modernSummary?: string;
 }
 
 interface Experience {
@@ -56,9 +56,25 @@ interface GroupedExperience {
   roles: ExperienceRole[];
 }
 
-export const useResumeStore = defineStore("resume", () => {
-  // State - converted from your old resumeData object
-  const personalInfo = ref<PersonalInfo & { modernSummary?: string }>({
+interface ResumeStore {
+  // State
+  personalInfo: PersonalInfo;
+  experiences: Experience[];
+  skillCategories: SkillCategory[];
+
+  // Computed (as getters)
+  totalExperience: number;
+  filteredExperiences: Experience[];
+  groupedExperiences: GroupedExperience[];
+
+  // Actions
+  getExperienceById: (id: number) => Experience | undefined;
+  getExperienceBySlug: (slug: string) => Experience | undefined;
+}
+
+export const useResumeStore = create<ResumeStore>((set, get) => ({
+  // State
+  personalInfo: {
     name: "Erik Stuble",
     title: "Engineering Manager",
     email: "erik.stuble11@gmail.com",
@@ -73,10 +89,10 @@ export const useResumeStore = defineStore("resume", () => {
     summary:
       "Engineering leader with over a decade of experience building and scaling high-performing teams to deliver secure, innovative cloud applications, microservices, SaaS, PaaS, and IaaS solutions for startups and global organizations. Passionate about technology, business impact, and mentoring the next generation of talent.",
     modernSummary:
-      "I have over 15 years of experience learning and working at the intersection of software, engineering, and business. I’ve applied these skills by living, working, and managing teams both in-person and remotely across Australia, Asia, Europe, and the Americas. Through these diverse experiences, I’ve built deep expertise in cloud, DevSecOps, automation, and agile delivery—driving transformation and business agility, and creating world-class products and platforms that serve a global community of customers and consumers.",
-  });
+      "I have over 15 years of experience learning and working at the intersection of software, engineering, and business. I've applied these skills by living, working, and managing teams both in-person and remotely across Australia, Asia, Europe, and the Americas. Through these diverse experiences, I've built deep expertise in cloud, DevSecOps, automation, and agile delivery—driving transformation and business agility, and creating world-class products and platforms that serve a global community of customers and consumers.",
+  },
 
-  const experiences = ref<Experience[]>([
+  experiences: [
     {
       id: 1,
       slug: "rockwell-automation-engineering-manager",
@@ -88,7 +104,7 @@ export const useResumeStore = defineStore("resume", () => {
       duration: "August 2022 - Present",
       location: "Cleveland, Ohio, US",
       description:
-        "Leading and growing a global, hybrid/remote security engineering team responsible for application security, cloud and hybrid infrastructure, and compliance for Rockwell Automation’s flagship SaaS product, FactoryTalk Design Studio (FTDS). Brought in to manage the company’s strategic push to the cloud, overseeing the transformation to cloud-native applications and driving the adoption of modern DevOps and security best practices, workflows, and delivery pipelines to accelerate product delivery and enhance organizational agility.",
+        "Leading and growing a global, hybrid/remote security engineering team responsible for application security, cloud and hybrid infrastructure, and compliance for Rockwell Automation's flagship SaaS product, FactoryTalk Design Studio (FTDS). Brought in to manage the company's strategic push to the cloud, overseeing the transformation to cloud-native applications and driving the adoption of modern DevOps and security best practices, workflows, and delivery pipelines to accelerate product delivery and enhance organizational agility.",
       technologies: [
         "Azure",
         "AWS",
@@ -118,7 +134,7 @@ export const useResumeStore = defineStore("resume", () => {
         "Leading a global, hybrid/remote team of over 25 (including consultants), having grown the team from 6 to 12, across four strategic programs focused on cloud and hybrid infrastructure security and compliance.",
         "Managing four major business-critical programs across cloud, hybrid-cloud, and embedded systems (FTDS, Logix Designer, DfS [Design for Security], and Product Automation).",
         "Responsible for all aspects of people management, including hiring, onboarding, regular one-on-ones, quarterly and annual performance reviews, compensation adjustments, promotions, and career development for a global, hybrid/remote team.",
-        "Delivered Rockwell Automation’s first global cloud product, FactoryTalk Design Studio (FTDS), leading the company’s inaugural SaaS launch on Microsoft Azure with multi-region, multi-account architecture and approving all security and implementation aspects.",
+        "Delivered Rockwell Automation's first global cloud product, FactoryTalk Design Studio (FTDS), leading the company's inaugural SaaS launch on Microsoft Azure with multi-region, multi-account architecture and approving all security and implementation aspects.",
         "Engineered a Kubernetes-native RBAC platform with backend (Go) and frontend (AngularJS) microservices, serving both internal developers/users and as a core component of the FTDS product for customers.",
         "Built and integrated a comprehensive DevSecOps security and compliance pipeline, embedding automated controls and tools including Aqua Security (container scanning), SAST (SonarQube), DAST (StackHawk, Burp Suite), SCA (BlackDuck, JFrog Xray), and GitHub Advanced Security tooling (CodeQL, Dependabot, and secret scanning) into CI/CD and hardening AKS Kubernetes environments.",
         "Worked with the global security team to build out SBOM pipelines, verification, and storage utilizing GitHub, AquaSec/Trivy, BlackDuck, CycloneDX, and Cybeats.",
@@ -134,12 +150,12 @@ export const useResumeStore = defineStore("resume", () => {
       slug: "allianz-technology-se-engineering-manager",
       company: "Allianz Technology SE",
       companyOverview:
-        "Allianz Technology is the global IT service provider for Allianz Group, one of the world’s largest insurers and asset managers, with over €2 trillion in assets under management and operations in 70+ countries.",
+        "Allianz Technology is the global IT service provider for Allianz Group, one of the world's largest insurers and asset managers, with over €2 trillion in assets under management and operations in 70+ countries.",
       position:
         "Engineering Manager, Enterprise Architecture - Agile Delivery Platform (ADP)",
       duration: "August 2019 - August 2021",
       location: "Munich, Germany",
-      description: `Directed engineering and delivery for Allianz Technology’s global Agile Delivery Platform (ADP), leading a cross-functional team to design, implement, and launch the company’s first managed Kubernetes PaaS solution. Oversaw technical execution, resource planning, and operational excellence, ensuring alignment with enterprise architecture and business objectives.`,
+      description: `Directed engineering and delivery for Allianz Technology's global Agile Delivery Platform (ADP), leading a cross-functional team to design, implement, and launch the company's first managed Kubernetes PaaS solution. Oversaw technical execution, resource planning, and operational excellence, ensuring alignment with enterprise architecture and business objectives.`,
       technologies: [
         "AWS",
         "Azure",
@@ -174,11 +190,11 @@ export const useResumeStore = defineStore("resume", () => {
       slug: "allianz-technology-se-product-manager",
       company: "Allianz Technology SE",
       companyOverview:
-        "Allianz Technology is the global IT service provider for Allianz Group, one of the world’s largest insurers and asset managers, with over €2 trillion in assets under management and operations in 70+ countries.",
+        "Allianz Technology is the global IT service provider for Allianz Group, one of the world's largest insurers and asset managers, with over €2 trillion in assets under management and operations in 70+ countries.",
       position: "Product Manager, Enterprise Architecture - Public Cloud Team",
       duration: "August 2018 - August 2019",
       location: "Munich, Germany",
-      description: `Launched and scaled Allianz’s first global AWS & Azure cloud managed infrastructure service, transforming an internal start-up into a production platform spanning 14 regions and 300+ accounts. Defined the product vision and roadmap, led multi-vendor and cross-functional teams, and managed all aspects of cloud operations, service delivery, and client engagement. Introduced agile methodologies and practices, driving a culture of continuous improvement and delivery transformation. Drove technical and business alignment, enabling secure, scalable, and cost-effective cloud adoption across the Allianz group`,
+      description: `Launched and scaled Allianz's first global AWS & Azure cloud managed infrastructure service, transforming an internal start-up into a production platform spanning 14 regions and 300+ accounts. Defined the product vision and roadmap, led multi-vendor and cross-functional teams, and managed all aspects of cloud operations, service delivery, and client engagement. Introduced agile methodologies and practices, driving a culture of continuous improvement and delivery transformation. Drove technical and business alignment, enabling secure, scalable, and cost-effective cloud adoption across the Allianz group`,
       technologies: [
         "AWS",
         "Azure",
@@ -197,13 +213,12 @@ export const useResumeStore = defineStore("resume", () => {
         "Bash",
       ],
       achievements: [
-        // Enhanced Version only
         "Established and grew the first cloud program from 1 to 5 teams (5 to 30+ members) supporting global business units.",
         "Managed specialized teams for cloud development, consulting, customer service, and financial management for AWS and Azure cloud products and services.",
         "Advised the Senior VP of Architecture and Allianz Technology C-suite, including the CEO, on cloud strategy and progress through quarterly updates and strategic recommendations.",
         "Managed $100M+ in cloud spend and implemented cost visibility and FinOps tooling.",
         "Engineered multi-region landing zones, networking, user management (IAM), and automated infrastructure (IaC) using Terraform, Ansible, Packer, Jenkins, GitHub.",
-        "Coordinated product launches, feature releases, and 3rd party integrations for Allianz’s IaaS cloud platform.",
+        "Coordinated product launches, feature releases, and 3rd party integrations for Allianz's IaaS cloud platform.",
         "Created RFPs, service agreements, and detailed technical requirements for new and existing projects.",
         "Designed and led the Operations Excellence team and incident management process, ensuring reliability and rapid response for global cloud services.",
         "Developed and maintained client relationships, gathering feedback and aligning services to business needs.",
@@ -335,9 +350,9 @@ export const useResumeStore = defineStore("resume", () => {
         "Managed product and team reports in Confluence and Jira, ensuring transparency and alignment across all stakeholders",
       ],
     },
-  ]);
+  ],
 
-  const skillCategories = ref<SkillCategory[]>([
+  skillCategories: [
     {
       name: "Cloud Platforms",
       icon: "fas fa-cloud",
@@ -408,23 +423,22 @@ export const useResumeStore = defineStore("resume", () => {
         { name: "Budget Management", level: 80 },
       ],
     },
-  ]);
+  ],
 
-  // Computed properties - replacing your old computed properties
-  const totalExperience = computed(() => {
+  // Computed properties (as getters)
+  get totalExperience() {
     const startYear = 2013;
     const currentYear = new Date().getFullYear();
     return currentYear - startYear;
-  });
+  },
 
-  const filteredExperiences = computed(() => {
-    return experiences.value;
-  });
+  get filteredExperiences() {
+    return get().experiences;
+  },
 
-  // Grouped experience data
-  const groupedExperiences = computed<GroupedExperience[]>(() => {
+  get groupedExperiences() {
     const grouped: Record<string, ExperienceRole[]> = {};
-    experiences.value.forEach((exp) => {
+    get().experiences.forEach((exp) => {
       if (!grouped[exp.company]) grouped[exp.company] = [];
       grouped[exp.company].push({
         position: exp.position,
@@ -439,30 +453,14 @@ export const useResumeStore = defineStore("resume", () => {
       company,
       roles,
     }));
-  });
+  },
 
-  // Actions - replacing your old methods
-  const getExperienceById = (id: number) => {
-    return experiences.value.find((exp) => exp.id === id);
-  };
+  // Actions
+  getExperienceById: (id: number) => {
+    return get().experiences.find((exp) => exp.id === id);
+  },
 
-  const getExperienceBySlug = (slug: string) => {
-    return experiences.value.find((exp) => exp.slug === slug);
-  };
-
-  return {
-    // State
-    personalInfo,
-    experiences,
-    skillCategories,
-
-    // Computed
-    totalExperience,
-    filteredExperiences,
-    groupedExperiences,
-
-    // Actions
-    getExperienceById,
-    getExperienceBySlug,
-  };
-});
+  getExperienceBySlug: (slug: string) => {
+    return get().experiences.find((exp) => exp.slug === slug);
+  },
+}));
