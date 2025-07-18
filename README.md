@@ -1,5 +1,7 @@
 # Resume Website Monorepo
 
+> **⚠️ Testing Note:** Some component tests (HomeView, ExperienceView, ExperienceDetailView) are currently disabled due to React Router DOM module resolution issues in the Jest test environment. The working tests cover data validation, ContactView, AboutView, and SkillsView functionality.
+
 A modern, containerized web application for showcasing your resume, built with React (frontend) and Node.js (Express, TypeScript) backend. Supports local development, Docker, and Kubernetes workflows.
 
 ---
@@ -109,16 +111,17 @@ npm run check
 
 ### Frontend Testing
 - **Basic unit tests** using Jest and React Testing Library
-- **Test location:** `frontend/src/resumeStore.test.tsx`
+- **Test location:** `frontend/src/resumeStore.test.tsx` and `frontend/src/views/*.test.tsx`
 - **Run tests:**
   ```sh
   npm run test:unit --workspace frontend
   ```
-- **Current test coverage (limited):**
+- **Current test coverage (21 tests):**
   - ResumeStore data structure validation (2 tests)
-  - Required fields validation
-  - Data type validation
-- **Note:** Only tests the resume store data structure, no component tests yet
+  - ContactView component tests (7 tests)
+  - AboutView component tests (5 tests)
+  - SkillsView component tests (6 tests)
+- **Note:** Some component tests (HomeView, ExperienceView, ExperienceDetailView) are disabled due to React Router DOM module resolution issues
 
 ### Backend Testing
 - **Health checks** via API endpoints
@@ -135,11 +138,12 @@ npm run check
   ```
 
 ### Test Structure
-The frontend includes basic tests for the resume data store:
-- Validates all required fields exist (`id`, `slug`, `company`, `position`, `duration`, `location`, `description`, `technologies`, `achievements`)
-- Ensures correct data types (numbers for IDs, strings for text, arrays for technologies/achievements)
-- **Current status:** 2 passing tests, limited coverage
-- **Missing:** Component tests, integration tests, user interaction tests
+The frontend includes tests for data validation and component rendering:
+- **Data validation:** Validates all required fields exist (`id`, `slug`, `company`, `position`, `duration`, `location`, `description`, `technologies`, `achievements`)
+- **Component tests:** Tests ContactView, AboutView, and SkillsView component rendering and functionality
+- **Current status:** 21 passing tests across 4 test suites
+- **Disabled tests:** HomeView, ExperienceView, ExperienceDetailView (React Router DOM module resolution issue)
+- **Missing:** Integration tests, user interaction tests, routing component tests
 
 ---
 
