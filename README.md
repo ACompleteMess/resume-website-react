@@ -353,3 +353,13 @@ Pull requests and issues are welcome!
    ```
 
 Your site will be available at: https://acompletemess.github.io/resume-website-react/ 
+
+**Note:** If you are using React Router, set the `basename` prop on `BrowserRouter` to `/resume-website-react/` in your `App.tsx`:
+
+```jsx
+<BrowserRouter basename="/resume-website-react/">
+  {/* your routes */}
+</BrowserRouter>
+```
+
+This ensures all navigation works correctly when deployed to GitHub Pages. 

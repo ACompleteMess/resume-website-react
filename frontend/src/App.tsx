@@ -149,7 +149,7 @@ const Footer: React.FC = () => {
 
 function App() {
   return (
-    <Router>
+    <Router basename="/resume-website-react/">
       <div id="app">
         <EnvironmentBanner />
         <Navigation />
