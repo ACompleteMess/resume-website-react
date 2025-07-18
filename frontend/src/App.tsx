@@ -23,19 +23,21 @@ import "./assets/main.css";
 
 // Environment banner component
 const EnvironmentBanner: React.FC = () => {
-  const env = process.env.NODE_ENV || "development";
+  const env = String(process.env.NODE_ENV || "development");
   const showEnvBanner = env !== "production";
 
   if (!showEnvBanner) return null;
 
+  // Capitalize the environment label
   const envLabel =
-    env === "development"
-      ? "Development Environment"
-      : env === "test"
-        ? "Test Environment"
-        : env;
+    env.charAt(0).toUpperCase() + env.slice(1) + " Environment React";
 
-  const envClass = env === "development" ? "env-banner-dev" : "env-banner-test";
+  let envClass = "env-banner-test";
+  if (env === "development") {
+    envClass = "env-banner-dev";
+  } else if (env === "staging") {
+    envClass = "env-banner-staging";
+  }
 
   return <div className={`env-banner ${envClass}`}>{envLabel}</div>;
 };
