@@ -56,9 +56,12 @@ A modern, containerized web application for showcasing your resume, built with R
 npm install
 ```
 
-### 2. Start both frontend and backend (development):
+### 2. Start frontend and backend (development):
 ```sh
-npm run start:dev
+# Start frontend
+npm run frontend
+# Start backend (in another terminal)
+npm run backend
 ```
 - Frontend: [http://localhost:9000](http://localhost:9000)
 - Backend: [http://localhost:9001](http://localhost:9001)
@@ -77,15 +80,15 @@ npm run check
 
 ## Scripts (from project root)
 
-- `npm run start:dev` — Start both servers in dev mode (uses environment variables or defaults)
-- `npm run start:staging` — Start both servers in staging mode
-- `npm run start:prod` — Start both servers in production mode
-- `npm run build` — Build both frontend and backend for production
+- `npm run frontend` — Start frontend in development mode
+- `npm run frontend:staging` — Start frontend in staging mode
+- `npm run frontend:prod` — Start frontend in production mode
+- `npm run backend` — Start backend in development mode
+- `npm run backend:staging` — Start backend in staging mode
+- `npm run backend:prod` — Start backend in production mode
 - `npm run check` — Lint, format, type-check, and test both frontend and backend
-- `npm run clean` — Remove build artifacts
-- `npm run clean:all` — Remove build artifacts, node_modules, and lock files
+- `npm run clean` — Reinstall dependencies for all workspaces
 - `node scripts/health-check.js [env]` — Health check for any environment (default: development)
-- `npm run docker:logs` — View logs from Docker Compose services
 
 > All scripts are orchestrated from the root using npm workspaces. You can also run scripts in each workspace using `npm run <script> --workspace <workspace>`.
 
@@ -105,16 +108,17 @@ npm run check
 ## Testing & Quality
 
 ### Frontend Testing
-- **Unit tests** using Jest and React Testing Library
+- **Basic unit tests** using Jest and React Testing Library
 - **Test location:** `frontend/src/resumeStore.test.tsx`
 - **Run tests:**
   ```sh
   npm run test:unit --workspace frontend
   ```
-- **Current test coverage:**
-  - ResumeStore data structure validation
+- **Current test coverage (limited):**
+  - ResumeStore data structure validation (2 tests)
   - Required fields validation
   - Data type validation
+- **Note:** Only tests the resume store data structure, no component tests yet
 
 ### Backend Testing
 - **Health checks** via API endpoints
@@ -131,27 +135,24 @@ npm run check
   ```
 
 ### Test Structure
-The frontend includes comprehensive tests for the resume data store:
+The frontend includes basic tests for the resume data store:
 - Validates all required fields exist (`id`, `slug`, `company`, `position`, `duration`, `location`, `description`, `technologies`, `achievements`)
 - Ensures correct data types (numbers for IDs, strings for text, arrays for technologies/achievements)
-- Tests are resilient to adding optional fields but will break if required fields are removed or data types change
+- **Current status:** 2 passing tests, limited coverage
+- **Missing:** Component tests, integration tests, user interaction tests
 
 ---
 
 ## Docker & Kubernetes
 
 ### Docker Compose
+- Basic Docker Compose setup with frontend and backend services
 - Healthchecks are configured for both frontend (`/`) and backend (`/api/health`) services.
 - Uses environment-specific `.env` files at the root for Compose only (not checked into repo).
-- Example usage:
-  ```sh
-  npm run docker:up:dev
-  npm run docker:up:staging  
-  npm run docker:up:prod
-  ```
+- **Note:** Docker scripts not yet implemented in package.json
 
 ### Kubernetes
-- Manifests in `k8s/` for dev, staging, prod.
+- Basic Kubernetes manifests in `k8s/` for dev, staging, prod.
 - Liveness and readiness probes are set for both frontend and backend.
 - **Image pull policy:**
   - `Never` for dev (uses local images)
@@ -159,6 +160,7 @@ The frontend includes comprehensive tests for the resume data store:
   - `Always` for prod
 - Use Helm for templated deployments.
 - For local dev, ensure images are built locally and use `imagePullPolicy: Never`.
+- **Note:** Requires Docker images to be built and pushed to registry
 
 ---
 
@@ -245,12 +247,12 @@ You can access the frontend in Kubernetes using either NodePort or port-forwardi
 ## Development Workflow
 
 ### Code Quality Checks
-The project includes comprehensive quality checks that run automatically:
+The project includes basic quality checks that run automatically:
 
 1. **Linting** - ESLint checks for code style and potential issues
 2. **Formatting** - Prettier ensures consistent code formatting
 3. **Type Checking** - TypeScript compiler validates types
-4. **Testing** - Jest runs unit tests
+4. **Testing** - Jest runs unit tests (limited coverage)
 
 Run all checks with:
 ```sh
@@ -258,11 +260,14 @@ npm run check
 ```
 
 ### Adding New Tests
-When adding new features, consider adding tests to maintain quality:
+The current test coverage is minimal. When adding new features, consider expanding test coverage:
 
 1. **Frontend tests** go in `frontend/src/` with `.test.tsx` extension
+   - Currently only testing data store, need component tests
+   - Consider testing user interactions and component rendering
 2. **Backend tests** can be added to `backend/` (not implemented yet)
 3. **Integration tests** can use the health check scripts as a starting point
+4. **Priority:** Add tests for React components and user interactions
 
 ### State Management
 The frontend uses Zustand for state management with a centralized resume store:
